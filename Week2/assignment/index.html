@@ -17,18 +17,22 @@
 
 
 <body>
+
     <!--Main content of the site-->
     <div>
+
         <!--Control and output for the "shoot" functionality-->
         <div>
             <button id="trigger-button">Trigger</button>
             <span id="trigger-display"></span>
         </div>
+
         <!--Control and output for the "reload" functionality-->
         <div>
             <button id="reload-button">Reload</button>
             <span id="reload-display"></span>
         </div>
+
     </div>
     
     <script>
@@ -56,6 +60,8 @@
         var currentAmmo = max
         //Amount of ammo in the character's inventory
         var inventory = 10
+        //my added variable
+        var storedMath = 0
 
         //Changes the words between <span> and </span> for each span element
         triggerDisplay.innerHTML = `AMMO: ${currentAmmo}`
@@ -93,6 +99,32 @@
             c. Display the result on in the reloadDisplay by changing it's innerHTML
             d. EXTRA CHALLENGE: Figure out how much ammo to load. This will require some math based on how much ammo has been expended and the maximum amount ammo the weapon can hold
         --------------------------------------------------*/
+
+
+        reloadButton.addEventListener(`click`, reload)
+
+        function reload(event)
+        {
+            reloadDisplay.innerHTML = `INVENTORY: ${inventory}`
+
+            if(inventory<0)
+            {
+                inventory=0;
+            }
+
+            if(max-currentAmmo !=0 && inventory !=0)
+            {
+                storedMath = max-currentAmmo;
+                currentAmmo = storedMath+currentAmmo;
+                inventory = inventory-storedMath;
+
+            }
+
+            triggerDisplay.innerHTML = `AMMO: ${currentAmmo}`
+            reloadDisplay.innerHTML = `INVENTORY: ${inventory}`
+
+        }
+
     </script>
 
 </body>
