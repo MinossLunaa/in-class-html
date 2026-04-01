@@ -81,12 +81,18 @@
         */
         function shoot(event)
         {
+            if(inventory == 0 && currentAmmo == 0)
+            {
+            alert("out of ammo!");
+            }
+
             currentAmmo--
             if(currentAmmo<0)
             {
                 currentAmmo = 0;
             }
             triggerDisplay.innerHTML = `AMMO: ${currentAmmo}`
+
         }
 
         /*------------------INSTRUCTIONS------------------
@@ -107,22 +113,33 @@
         {
             reloadDisplay.innerHTML = `INVENTORY: ${inventory}`
 
-            if(inventory<0)
+            if(inventory == 0 && currentAmmo>0)
             {
-                inventory=0;
+            alert("reserves empty can't reload")
             }
 
-            if(max-currentAmmo !=0 && inventory !=0)
+            if(inventory !=0 && currentAmmo+inventory >= max)
             {
                 storedMath = max-currentAmmo;
                 currentAmmo = storedMath+currentAmmo;
                 inventory = inventory-storedMath;
+            }else{
+                currentAmmo = inventory+currentAmmo;
+                inventory = 0;
+            }
 
+            if(inventory<0)
+            {
+                inventory = 0;
             }
 
             triggerDisplay.innerHTML = `AMMO: ${currentAmmo}`
             reloadDisplay.innerHTML = `INVENTORY: ${inventory}`
 
+             if(inventory == 0 && currentAmmo == 0)
+            {
+            alert("out of ammo!");
+            }
         }
 
     </script>
