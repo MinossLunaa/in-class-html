@@ -115,10 +115,10 @@
 
             if(inventory == 0 && currentAmmo>0)
             {
-            alert("reserves empty can't reload")
+            alert("reserve empty can't reload")
             }
 
-            if(inventory !=0 && currentAmmo+inventory >= max)
+            if(currentAmmo+inventory >= max)
             {
                 storedMath = max-currentAmmo;
                 currentAmmo = storedMath+currentAmmo;
@@ -127,12 +127,7 @@
                 currentAmmo = inventory+currentAmmo;
                 inventory = 0;
             }
-
-            if(inventory<0)
-            {
-                inventory = 0;
-            }
-
+            
             triggerDisplay.innerHTML = `AMMO: ${currentAmmo}`
             reloadDisplay.innerHTML = `INVENTORY: ${inventory}`
 
