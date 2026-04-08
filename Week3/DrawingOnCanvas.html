@@ -31,10 +31,97 @@
 
         //Outline Box
         ctx.strokeStyle = "orange";
+        ctx.lineWidth = 5.0;
         ctx.strokeRect(200,20,50,100);
 
         ctx.strokeStyle = "purple";
         ctx.strokeRect(260,20,50,100);
+
+        //lets draw a circle
+        ctx.strokeStyle = "#f00";
+        ctx.lineWidth = 1.0;
+        ctx.fillStyle = "#f00";
+        ctx.beginPath();
+        ctx.arc(45, 160, 25, 0, 2*Math.PI);
+        //       x,  y, rad, start, end
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f0";
+        ctx.fillStyle = "#0f0";
+        ctx.beginPath();
+        ctx.arc(105, 160, 25, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "#00f";
+        ctx.fillStyle = "#00f";
+        ctx.beginPath();
+        ctx.arc(165, 160, 25, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "orange";
+        ctx.lineWidth = 5.0;
+        ctx.beginPath();
+        ctx.arc(225, 160, 25, 0, 2*Math.PI);
+        ctx.stroke();
+
+        ctx.strokeStyle = "purple";
+        ctx.beginPath();
+        ctx.arc(285, 160, 25, 0, 2*Math.PI);
+        ctx.stroke();
+
+        //drawing triangles
+        ctx.strokeStyle = "#f00";
+        ctx.fillStyle = "#f00";
+        ctx.lineWidth = 1.0;
+        ctx.beginPath();
+        ctx.moveTo(45, 205);
+        ctx.lineTo(70, 240);
+        ctx.lineTo(25, 240);
+        ctx.lineTo(45, 205);
+        ctx.fill();
+        ctx.stroke();
+        
+        ctx.strokeStyle = "#0f0";
+        ctx.fillStyle = "#0f0";
+        ctx.beginPath();
+        ctx.moveTo(105, 205);
+        ctx.lineTo(130, 240);
+        ctx.lineTo(85, 240);
+        ctx.lineTo(105, 205);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "#00f";
+        ctx.fillStyle = "#00f";
+        ctx.beginPath();
+        ctx.moveTo(165, 205);
+        ctx.lineTo(190, 240);
+        ctx.lineTo(145, 240);
+        ctx.lineTo(165, 205);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "orange";
+        ctx.lineWidth = 5.0;
+        ctx.beginPath();
+        ctx.moveTo(225, 205);
+        ctx.lineTo(250, 240);
+        ctx.lineTo(205, 240);
+        ctx.lineTo(227, 205);
+        ctx.stroke();
+
+        ctx.strokeStyle = "purple";
+        ctx.beginPath();
+        ctx.moveTo(285, 205);
+        ctx.lineTo(310, 240);
+        ctx.lineTo(265, 240);
+        ctx.lineTo(287, 205);
+        ctx.stroke();
+        
+
     </script>
 
 </body>
