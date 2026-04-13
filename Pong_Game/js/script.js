@@ -1,49 +1,45 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-var fps = 1000/60; //gives you math for 60fps
-var timer = setInterval(game, fps); //
+var fps = 1000/60;
+var timer = setInterval(ball, fps);
 var x = canvas.width/2-50;
 var y = canvas.width/5-50;
-var moveX = setRandomDirection();
-var moveY = setRandomDirection();
+var moveballX = setRandomDirection();
+var moveballY = setRandomDirection();
 var color = "rgb(0, 0, 0)";
 
 
-
-function game()
+function ball()
 {
-    //clear canvas
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //draw object
+
     ctx.fillStyle = color;
     ctx.fillRect(x, y, 50, 50);
 
-    //update values
-    x += moveX;
-    y += moveY;
+    x += moveballX;
+    y += moveballY;
 
     if(x > canvas.width - 50){
-        moveX = -2;
-        setRandomColor();
+        moveballX = -2;
     }
     if(x < 0) {
-        moveX = +2;
-        setRandomColor();
+        moveballX = +2;
     }
 
     if(y > canvas.height - 50) {
-        moveY = -2;
-        setRandomColor();
+        moveballY = -2;
     }
     if(y < 0) {
-        moveY = +2;
-        setRandomColor();
+        moveballY = +2;
     }
 
+     ctx.fillRect(140, 300, 10, 60); //left paddle
+     ctx.fillRect(1460, 300, 10, 60); //right paddle
+
 }
-a
-//function setRandomColor(){color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;}
+
 
 function setRandomDirection(){
     dir = Math.random();
