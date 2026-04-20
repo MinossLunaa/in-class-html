@@ -4,32 +4,37 @@ var ctx = canvas.getContext("2d");
 var interval = 1000/60;
 setInterval(game, interval);
 
-function createBall(){
+function createGameObject() {
 
-    var ball = {
-    x:randomNumber(15, canvas.width-15),
-    y:randomNumber(15, canvas.height-15),
-    moveX:setRandomDirection(),
-    moveY:setRandomDirection(),
-    radius:15,
-    color:`rgb(${randomNumber(0, 255)}, ${randomNumber(0, 255)}, ${randomNumber(0, 255)})`,
-
-    drawBall:function() {
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
-    ctx.fill();
+    var gameObject = {
+        x: randomNumber(15, canvas.width - 15),
+        y: randomNumber(15, canvas.height - 15),
+        moveX: setRandomDirection(),
+        moveY: setRandomDirection(),
+        radius: 15,
+        color: `rgb(${randomNumber(0, 255)}, ${randomNumber(0, 255)}, ${randomNumber(0, 255)})`,
+        width: 15,
+        height: 15,
+        drawBall: function () {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fill();
+        },
+        drawSquare: function () {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
-    }
 
-    return ball;
+    return gameObject;
 }
+
 
 function randomNumber(low, high){
-
     return Math.random() * (high-low) + low;
-
 }
+
 
 function setRandomDirection(){
     dir = Math.random();
@@ -40,16 +45,41 @@ function setRandomDirection(){
     }
 }
 
-var myBall = createBall();
+
+var myBall = createGameObject();
+var player = createGameObject();
+player.x = canvas.width/2;
+player.y = canvas.height/2;
+player.width = 30;
+player.height = 30;
+player.color = "purple";
+
 var myBalls = []
 
-for(var i = 0; i<10000; i++){
-    myBalls[i] = createBall();
+
+for(var i = 0; i<10; i++){
+    myBalls[i] = createGameObject();
 }
+
 
 function game(){
     //clearing game screen
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+    if(w == true || up == true){
+        player.y -= 2;
+    }
+    if(a == true || left == true){
+        player.x -= 2;
+    }
+    if(s == true || down == true){
+        player.y += 2;
+    }
+    if(d == true || right == true){
+        player.x += 2;
+    }
+    player.drawSquare();
 
     //myBall.drawBall();
 

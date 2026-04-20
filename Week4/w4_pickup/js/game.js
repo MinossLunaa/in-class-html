@@ -13,6 +13,7 @@ var timer = setInterval(main, fps)
 /*-------------INSTRUCTION--------------
 Create variable calledd score to store amount of "pickups" collected
 ---------------------------------------*/
+var score = 0;
 
 /*--------------avatar------------
 avatar is the "player controllable" Object
@@ -102,9 +103,7 @@ function main()
     {
         testPickup.x = 1000;
         avatar.color = testPickup.color;
-        /*----------INSTRUCTION------------
-        increase the score by one
-        -----------------------------------*/
+        score++;
     }
 
     for(var i=0; i<pickups.length; i++)
@@ -112,7 +111,11 @@ function main()
         /*----------INSTRUCTION------------
         make the avatar "collect" the pickups and increase the score
         -----------------------------------*/
-       
+    if(pickups[i].overlaps(avatar))
+    {
+        pickups[i].x = 1000;
+        score++;
+    }
         pickups[i].render();
     }
 
@@ -129,6 +132,7 @@ function main()
     HINT: You will have to research how this works 
     W3schools.com and your book can help
     -----------------------------------*/
+
 }
 
 //random number generator
