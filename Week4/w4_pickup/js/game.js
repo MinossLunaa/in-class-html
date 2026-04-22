@@ -14,6 +14,7 @@ var timer = setInterval(main, fps)
 Create variable calledd score to store amount of "pickups" collected
 ---------------------------------------*/
 var score = 0;
+var speedChange = 0;
 
 /*--------------avatar------------
 avatar is the "player controllable" Object
@@ -104,6 +105,9 @@ function main()
         testPickup.x = 1000;
         avatar.color = testPickup.color;
         score++;
+        speedChange++;
+        avatar.vx = 4;
+        avatar.vy = 4;
     }
 
     for(var i=0; i<pickups.length; i++)
@@ -132,7 +136,25 @@ function main()
     HINT: You will have to research how this works 
     W3schools.com and your book can help
     -----------------------------------*/
+        ctx.font = "32px Arial";
+        ctx.direction = "ltr";
+        ctx.fillText(score, 750, 475);
 
+    if(speedChange == 0){
+        ctx.font = "32px Arial";
+        ctx.direction = "ltr";
+        ctx.fillText("slow", 750, 425);
+    }else{
+        ctx.font = "32px Arial";
+        ctx.direction = "ltr";
+        ctx.fillText("fast", 750, 425);
+    }
+
+    if(score == 51){
+        ctx.font = "100px Arial";
+        ctx.direction = "ltr";
+        ctx.fillText("YOU WIN", 400, 250);
+    }
 }
 
 //random number generator
