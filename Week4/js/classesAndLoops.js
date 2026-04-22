@@ -7,7 +7,7 @@ setInterval(game, interval);
 function createGameObject() {
 
     var gameObject = {
-        x: randomNumber(15, canvas.width - 15),
+        x: randomNumber(115, canvas.width - 115),
         y: randomNumber(15, canvas.height - 15),
         moveX: setRandomDirection(),
         moveY: setRandomDirection(),
@@ -57,8 +57,10 @@ player.color = "purple";
 var myBalls = []
 
 
-for(var i = 0; i<10; i++){
+for(var i = 0; i<100; i++){
     myBalls[i] = createGameObject();
+    myBalls[i].moveY = 0;
+    myBalls[i].y = -myBalls[i].y;
 }
 
 
@@ -81,23 +83,29 @@ function game(){
     }
     player.drawSquare();
 
-    //myBall.drawBall();
-
+    //Right side of canvas
     for(var i = 0; i<myBalls.length; i++){
         myBalls[i].drawBall();
 
-        if(myBalls[i].x > canvas.width - myBalls[i].radius){
+        if(myBalls[i].x > canvas.width - myBalls[i].radius - 100){
             myBalls[i].moveX *= -1;
+            myBalls[i].y += myBalls[i].radius*8;
         }
-        if(myBalls[i].y > canvas.height - myBalls[i].radius){
-            myBalls[i].moveY *= -1;
+        //Bottom of canvas
+        if(myBalls[i].y > canvas.height + myBalls[i].radius){
+            //myBalls[i].moveY *= -1;
+            myBalls[i].y = -randomNumber(0,canvas.height);
         }
-        if(myBalls[i].x < myBalls[i].radius){
+
+        //left side of canvas
+        if(myBalls[i].x < myBalls[i].radius + 100){
             myBalls[i].moveX *= -1;
+            myBalls[i].y += myBalls[i].radius*8;
         }
-        if(myBalls[i].y < myBalls[i].radius){
-            myBalls[i].moveY *= -1;
-        }
+        //Top of canvas
+        // if(myBalls[i].y < myBalls[i].radius){
+        //     myBalls[i].moveY *= -1;
+        // }
         
         myBalls[i].x += myBalls[i].moveX;
         myBalls[i].y += myBalls[i].moveY;
