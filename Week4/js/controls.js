@@ -6,6 +6,8 @@ var a = false;
 var s = false;
 var d = false;
 
+var space = false
+
 var up = false;
 var down = false;
 var left = false;
@@ -41,6 +43,11 @@ function keyDown(e){
     if(e.key=="ArrowRight"){
         right = true;
     }
+
+    //shooting
+    if(e.keyCode == 32){
+        space = true;
+    }
 }
 
 function keyUp(e){
@@ -71,5 +78,10 @@ function keyUp(e){
     }
     if(e.key=="ArrowRight"){
         right = false;
+    }
+
+    //shooting
+    if(e.keyCode == 32){
+        space = false;
     }
 }
