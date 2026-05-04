@@ -6,7 +6,7 @@ var a = false;
 var s = false;
 var d = false;
 
-var space = false
+var space = false;
 
 var up = false;
 var down = false;
@@ -15,7 +15,7 @@ var right = false;
 
 
 function keyDown(e){
-     console.log("pressed" + e.key);
+     console.log("pressed" + e.keyCode);
     //wasd
     if(e.key=="w"){
         w = true;
@@ -51,7 +51,7 @@ function keyDown(e){
 }
 
 function keyUp(e){
-     console.log("released" + e.key);
+     console.log("released" + e.keyCode);
     //wasd
     if(e.key=="w"){
         w = false;
