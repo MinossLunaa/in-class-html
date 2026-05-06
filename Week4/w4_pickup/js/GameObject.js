@@ -72,4 +72,18 @@ class GameObject
         }
         return false;
     }
+
+    hitTestPoint(_obj){
+        if(
+            this.top() < _obj.bottom() &&
+            this.bottom() > _obj.top() &&
+            this.left() < _obj.right() &&
+            this.right() > _obj.left()
+        )
+        {
+            
+            return true
+        }
+        return false;
+    }
 }

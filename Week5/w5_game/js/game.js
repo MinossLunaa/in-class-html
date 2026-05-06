@@ -6,10 +6,15 @@ var timer = setInterval(main, fps);
 var gravity = 0.5;
 var jumping = false;
 
+var leftcollision = false;
+var rightcollision = false;
+var topcollision = false;
+var bottomcollision = false;
+
 //create player 1
 var avatar1 = new GameObject();
 avatar1.x = 200;
-avatar1.y = 975;
+avatar1.y = 800;
 avatar1.color = "pink";
 
 //create player 2
@@ -60,7 +65,7 @@ function main()
 ctx.clearRect(0, 0, c.width, c.height);
 
     //player 1 input
-    if(w == true){avatar1.y -= avatar1.vy;}
+    
     if(s == true){avatar1.y += avatar1.vy;}
     if(d == true){avatar1.x += avatar1.vx;}
     if(a == true){avatar1.x -= avatar1.vx;}
@@ -78,12 +83,75 @@ ctx.clearRect(0, 0, c.width, c.height);
     if(rightarrow == true){avatar4.x += avatar4.vx;}
     if(leftarrow == true){avatar4.x -= avatar4.vx;}
 
+
+    for (var i = 0; i < blocks.length; i++) {
+        
+        //collision detection for blocks -- player 1
+        if (blocks[i].overlaps(avatar1)) {
+
+            //collision with top of blocks
+            while(blocks[i].hitTestPoint(avatar1.bottom())){
+                avatar1.vy = 0;
+                avatar1.y--;
+
+                //jumping
+                if(w == true){
+                    avatar1.vy = -15;
+                }
+            }
+
+            //collision with bottom of blocks
+            while(blocks[i].hitTestPoint(avatar1.top())){
+                avatar1.vy = 0;
+                avatar1.y++;
+            }
+
+            //collision with left of blocks
+            while(blocks[i].hitTestPoint(avatar1.right())){
+                avatar1.x--;
+            }
+
+            //collision with right of blocks
+            while(blocks[i].hitTestPoint(avatar1.left())){
+                avatar1.x++;
+            }
+            
+        }   
+
+
+        //collision detection for blocks -- player 2
+        
+
+        //collision detection for blocks -- player 3
+        
+
+        //collision detection for blocks -- player 4
+        
+
+
+        blocks[i].render();
+    }
+    avatar1.vy += gravity;
+    avatar1.y += avatar1.vy;
+
+    
     //keeps player 1 on screen
     if(avatar1.x < 0 + avatar1.w/2){avatar1.x = 0 + avatar1.w/2;}
     if(avatar1.x > c.width + -avatar1.w/2){avatar1.x = c.width + -avatar1.w/2;}
     if(avatar1.y < 0 + avatar1.h/2){avatar1.y = 0 + avatar1.h/2;}
-    if(avatar1.y > c.height + -avatar1.h/2){avatar1.y = c.height + -avatar1.h/2;}
 
+    //player 1 on the ground
+    if(avatar1.y > c.height + -avatar1.h/2){
+        avatar1.vy = 0;
+        avatar1.y = c.height + -avatar1.h/2;
+
+        //jumping
+        if(w == true){
+            avatar1.vy = -15;
+        }
+    }
+
+    
     //keeps player 2 on screen
     if(avatar2.x < 0 + avatar2.w/2){avatar2.x = 0 + avatar2.w/2;}
     if(avatar2.x > c.width + -avatar2.w/2){avatar2.x = c.width + -avatar2.w/2;}
@@ -102,39 +170,6 @@ ctx.clearRect(0, 0, c.width, c.height);
     if(avatar4.y < 0 + avatar4.h/2){avatar4.y = 0 + avatar4.h/2;}
     if(avatar4.y > c.height + -avatar4.h/2){avatar4.y = c.height + -avatar4.h/2;} 
 
-    for (var i = 0; i < blocks.length; i++) {
-
-        //collision detection for blocks with player 1
-        if (blocks[i].overlaps(avatar1)) {
-        if (avatar1.x < blocks[i].x) {avatar1.x = blocks[i].x - blocks[i].w/2 - avatar1.w/2;} else {avatar1.x = blocks[i].x + blocks[i].w/2 + avatar1.w/2;}
-        }
-        
-        if (blocks[i].overlaps(avatar1)) {
-        if (avatar1.y < blocks[i].y) {avatar1.y = blocks[i].y - blocks[i].h/2 - avatar1.h/2;} else {avatar1.y = blocks[i].y + blocks[i].h/2 + avatar1.h/2;}
-        }   
-
-
-        //collision detection for blocks with player 2
-        if (blocks[i].overlaps(avatar2)) {
-        if (avatar2.x < blocks[i].x) {avatar2.x = blocks[i].x - blocks[i].w/2 - avatar2.w/2;} else {avatar2.x = blocks[i].x + blocks[i].w/2 + avatar2.w/2;}
-        }
-
-        //collision detection for blocks with player 3
-        if (blocks[i].overlaps(avatar3)) {
-        if (avatar3.x < blocks[i].x) {avatar3.x = blocks[i].x - blocks[i].w/2 - avatar3.w/2;} else {avatar3.x = blocks[i].x + blocks[i].w/2 + avatar3.w/2;}
-        }
-
-        //collision detection for blocks with player 4
-        if (blocks[i].overlaps(avatar4)) {
-        if (avatar4.x < blocks[i].x) {avatar4.x = blocks[i].x - blocks[i].w/2 - avatar4.w/2;} else {avatar4.x = blocks[i].x + blocks[i].w/2 + avatar4.w/2;}
-        }
-
-
-    
-        
-
-        blocks[i].render();
-    }
 
     avatar1.render();
     avatar2.render();

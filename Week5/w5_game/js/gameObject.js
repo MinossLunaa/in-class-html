@@ -30,18 +30,31 @@ class GameObject
         this.y = this.y + this.vy
     }
 
-    top(){return this.y - this.h/2;}
+    top(){return {x: this.x ,y:this.y - this.h/2}}
 
-    bottom(){return this.y + this.h/2}
+    bottom(){return {x: this.x,y:this.y + this.h/2}}
 
-    left(){return this.x - this.w/2}
+    left(){return {x:this.x - this.w/2,y:this.y}}
 
-    right(){return this.x + this.w/2}
+    right(){return {x:this.x + this.w/2, y:this.y}}
 
 
     overlaps(_obj)
     {
-        if(this.top() < _obj.bottom() && this.bottom() > _obj.top() && this.left() < _obj.right() && this.right() > _obj.left())
+        if(this.top().y < _obj.bottom().y && this.bottom().y > _obj.top().y && this.left().x < _obj.right().x && this.right().x > _obj.left().x)
+        {
+            return true
+        }
+        return false;
+    }
+
+    hitTestPoint(_point){
+        console.log("Test")
+        if(
+            this.top().y <= _point.y && 
+            this.bottom().y > _point.y && 
+            this.left().x < _point.x && 
+            this.right().x > _point.x)
         {
             return true
         }
