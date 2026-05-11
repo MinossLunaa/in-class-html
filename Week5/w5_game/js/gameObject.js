@@ -36,12 +36,23 @@ class GameObject
 
     left(){return {x:this.x - this.w/2,y:this.y}}
 
+    leftbottom(){return {x:this.x - this.w/2 + 6,y:this.y + this.h/2}}
+
     right(){return {x:this.x + this.w/2, y:this.y}}
+
+    rightbottom(){return {x:this.x + this.w/2 - 6,y:this.y + this.h/2}}
 
 
     overlaps(_obj)
     {
-        if(this.top().y < _obj.bottom().y && this.bottom().y > _obj.top().y && this.left().x < _obj.right().x && this.right().x > _obj.left().x)
+        if(
+           this.top().y < _obj.bottom().y && 
+           this.bottom().y > _obj.top().y &&
+           this.leftbottom().y > _obj.top().y &&
+           this.left().x < _obj.right().x &&
+           this.rightbottom().y > _obj.top().y &&
+           this.right().x > _obj.left().x
+        )
         {
             return true
         }
@@ -49,12 +60,15 @@ class GameObject
     }
 
     hitTestPoint(_point){
-        console.log("Test")
+        //console.log("Test")
         if(
             this.top().y <= _point.y && 
             this.bottom().y > _point.y && 
-            this.left().x < _point.x && 
-            this.right().x > _point.x)
+            this.leftbottom().y > _point.y && 
+            this.left().x < _point.x &&
+            this.rightbottom().y > _point.y && 
+            this.right().x > _point.x
+        )
         {
             return true
         }
