@@ -5,7 +5,10 @@ var fps = 1000/60;
 var timer = setInterval(main, fps);
 
 var gravity = 0.5;
-var jumpHeight = -10;
+var jumpHeight = -8;
+
+var tutorialEnd = false;
+
 
 //create player 1
 var avatar1 = new GameObject();
@@ -40,11 +43,20 @@ avatar4.vx = 5;
 avatar4.vy = 5;
 
 
-//place blocks
+//place blocks           x    y    w    h    color
 var blocks = [];
-blocks.push(createBlock(500, 950));
-blocks.push(createBlock(700, 800));
-blocks.push(createBlock(300, 600));
+blocks.push(createBlock(500, 950, 100, 100));
+blocks.push(createBlock(700, 950, 100, 300));
+blocks.push(createBlock(1550, 950, 100, 460));
+
+//place buttons
+var button = [];
+button.push(createButton(1110, 990, 30, 20, "blue"));
+button.push(createButton(1550, 710, 30, 20, "pink"));
+
+//place spikes
+var spikes = [];
+spikes.push(createSpike(825, 985, 30, 30));
 
 
 function main()
@@ -85,6 +97,29 @@ ctx.clearRect(0, 0, c.width, c.height);
         blocks[i].render();
     }
 
+    //button collisions
+    for (var i = 0; i < button.length; i++) {
+
+        buttonPress0(avatar1, button[0])
+        buttonPress0(avatar2, button[0])
+        buttonPress0(avatar3, button[0])
+        buttonPress0(avatar4, button[0])
+
+        buttonPress1(avatar1, button[1])
+        button[i].render();
+
+    }
+
+    //spike collisions
+    for (var i = 0; i < spikes.length; i++) {
+        spikeKill(avatar1, spikes[i]);
+        spikeKill(avatar2, spikes[i]);
+        spikeKill(avatar3, spikes[i]);
+        spikeKill(avatar4, spikes[i]);
+
+        spikes[i].render();
+    }
+
     //player bounds check
     playerBounds(avatar1);
     playerBounds(avatar2);
@@ -99,9 +134,94 @@ ctx.clearRect(0, 0, c.width, c.height);
 
     //movement
     avatar1.y += avatar1.vy;
-    avatar2.y += avatar2.vy;
+    avatar2.y += avatar2.vy;    
     avatar3.y += avatar3.vy;
     avatar4.y += avatar4.vy;
+
+
+    //------TEXT------
+    var controlsTrigger = false;
+    var redButtonTrigger = false;
+    var pinkButtonTrigger = false;
+    var spikeTrigger = false;
+
+    //controls dissapear
+    if(avatar1.x > 550 && avatar2.x > 550 && avatar3.x > 550 && avatar4.x > 550){
+        controlsTrigger = true;
+    }
+
+    //red button text
+    if (avatar1.x > 750 && avatar1.x < 1300 || avatar2.x > 750 && avatar2.x < 1300 || avatar3.x > 750 && avatar3.x < 1300 || avatar4.x > 750 && avatar4.x < 1300){
+        redButtonTrigger = true;
+    }
+
+    //pink button text appears
+    if (avatar1.x > 1400 || avatar2.x > 1400 || avatar3.x > 1400 || avatar4.x > 1400){
+        pinkButtonTrigger = true;
+    }
+
+    //spike text appears
+    if (avatar1.x > 500 && avatar1.x < 850 || avatar2.x > 500 && avatar2.x < 850 || avatar3.x > 500 && avatar3.x < 850 || avatar4.x > 500 && avatar4.x < 850 ){
+        spikeTrigger = true;
+    }
+
+    //controls text
+    if (tutorialEnd == true){
+        ctx.fillText(" ", 0, 0);
+    }
+    else if(controlsTrigger == false){
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "purple";
+    ctx.fillText("purple: Arrow Keys", 75, 835);
+    ctx.fillStyle = "grey";
+    ctx.fillText("grey: IJKL", 90, 885);
+    ctx.fillStyle = "cyan";
+    ctx.fillText("blue: TFGH", 90, 935);
+    ctx.fillStyle = "pink";
+    ctx.fillText("pink: WASD", 90, 985);
+    }else{
+        ctx.fillText(" ", 0, 0);
+    }
+
+    //red button text
+    if (tutorialEnd == true){
+        ctx.fillText(" ", 0, 0);
+    }
+    else if(redButtonTrigger == true){
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "blue";
+    ctx.fillText("buttons can be walked through", 1000, 940);
+    ctx.fillText("they will be pressed when jumped on", 980, 970);
+    }else{
+        ctx.fillText(" ", 0, 0);
+    }
+
+    //pink button text
+    if (tutorialEnd == true){
+        ctx.fillText(" ", 0, 0);
+    }
+    else if(pinkButtonTrigger == true){
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "pink";
+    ctx.fillText("some buttons are", 1475, 640);
+    ctx.fillText("color coordinated", 1475, 670);
+    }else{
+        ctx.fillText(" ", 0, 0);
+    }
+
+    //spike text
+    if (tutorialEnd == true){
+        ctx.fillText(" ", 0, 0);
+    }
+    else if(spikeTrigger == true){
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText("spikes hurt", 785, 950);
+    }else{
+        ctx.fillText(" ", 0, 0);
+    }
+
+    //-------------------
 
     avatar1.render();
     avatar2.render();
@@ -109,16 +229,41 @@ ctx.clearRect(0, 0, c.width, c.height);
     avatar4.render();
 }
 
-function createBlock(x, y, w = 100, h = 100) {
-    var b = new GameObject();
-    b.color = "yellow";
 
-    b.w = w;
-    b.h = h;
-    b.x = x;
-    b.y = y;
+function createBlock(x, y, w, h) {
+    var block = new GameObject();
+    block.color = "yellow";
 
-    return b;
+    block.w = w;
+    block.h = h;
+    block.x = x;
+    block.y = y;
+
+    return block;
+}
+
+function createButton(x, y, w, h, color){
+    var button = new GameObject();
+    button.color = color;
+
+    button.w = w;
+    button.h = h;
+    button.x = x;
+    button.y = y;
+
+    return button;
+}
+
+function createSpike(x, y, w, h){
+    var spike = new GameObject();
+    spike.color = "red";
+
+    spike.w = w;
+    spike.h = h;
+    spike.x = x;
+    spike.y = y;
+
+    return spike;
 }
 
 
@@ -254,8 +399,8 @@ function playerBounds(player) {
             avatar4.vy = jumpHeight;
         }
     }
-
 }
+
 
 function playerOnPlayer(player1, player2, player1Jump, player2Jump){
     //player 1 with 2
@@ -297,5 +442,68 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
 }
 
 
-//spikes
-//timer
+function spikeKill(player, spike){
+    if(spike.overlaps(player)) {
+        player.x = 100;
+        player.y = 400;
+    }
+}
+
+
+function buttonPress0(player, button, block1, block2){
+
+     if(button.overlaps(player)) {
+
+        //top of button
+        while(button.hitTestPoint(player.bottom()) ||  button.hitTestPoint(player.leftbottom()) || button.hitTestPoint(player.rightbottom())){
+            player.vy = 0;
+            player.y--;
+
+            //jumping 
+            if(w == true){ 
+                player.vy = jumpHeight;
+            }
+
+            if(player.vy == 0){
+            button.y = 1500;
+
+            blocks.push(createBlock(400, 975, 100, 55));
+            blocks.push(createBlock(600, 950, 100, 200));
+            }
+
+        }
+    }
+}
+
+
+function buttonPress1(player, button, block1, block2){
+
+     if(button.overlaps(player)) {
+
+        //top of button
+        while(button.hitTestPoint(player.bottom()) ||  button.hitTestPoint(player.leftbottom()) || button.hitTestPoint(player.rightbottom())){
+            player.vy = 0;
+            player.y--;
+
+            //jumping 
+            if(w == true){ 
+                player.vy = jumpHeight;
+            }
+
+            if(player.vy == 0){
+            button.y = 1500;
+
+                tutorialEnd = true;
+
+                for(var i = 0; i < 5; i++){
+                    blocks[i].y = 1500;
+                }
+
+                for(var i = 0; i < 1; i++){
+                    spikes[i].y = 1500;
+                }
+            }
+
+        }
+    }
+}
