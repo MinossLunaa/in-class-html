@@ -5,7 +5,7 @@ var fps = 1000/60;
 var timer = setInterval(main, fps);
 
 var gravity = 0.5;
-var jumpHeight = -18;
+var jumpHeight = -8;
 
 var startingX = 100;
 var startingY = 200;
