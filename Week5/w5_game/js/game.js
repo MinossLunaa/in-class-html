@@ -161,23 +161,30 @@ ctx.clearRect(0, 0, c.width, c.height);
     //button collisions
     for (var i = 0; i < button.length; i++) {
 
-        buttonPress0(avatar1, button[0]);
-        buttonPress0(avatar2, button[0]);
-        buttonPress0(avatar3, button[0]);
-        buttonPress0(avatar4, button[0]);
+        //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]
 
-        buttonPress1(avatar1, button[1]);
+        //tutorial button
+        buttonAdd(avatar1, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
+        buttonAdd(avatar2, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
+        buttonAdd(avatar3, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
+        buttonAdd(avatar4, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
 
-        buttonPress2(avatar1, button[2]);
-        buttonPress2(avatar2, button[2]);
-        buttonPress2(avatar3, button[2]);
-        buttonPress2(avatar4, button[2]);
+        //tutorial end button
+        buttonRemove(avatar1, button[1], {blocks: [{block: 5, y: 990}, {block: 6, y: 990}, {block: 7, y: 960}], spikes: [{spike: 1, y: 985}], button: [{button: 2, y: 990}]});
 
+        //post-spikes
+        buttonRemove(avatar1, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
+        buttonRemove(avatar2, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
+        buttonRemove(avatar3, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
+        buttonRemove(avatar4, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
+
+        //wall switches
         colorButton(avatar2, 2, 3, 4, 5, 3, button[3]);
         colorButton(avatar3, 4, 5, 6, 7, 4, button[4]);
         colorButton(avatar4, 6, 7, 0, 1, 5, button[5]);
 
-        buttonEnd(avatar1, button[6]);
+        //reset to start
+        buttonRemove(avatar1, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar1, x: startingX, y: startingY}, {player: avatar1, x: startingX, y: startingY}, {player: avatar1, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
 
         button[i].render();
     }
@@ -207,6 +214,11 @@ ctx.clearRect(0, 0, c.width, c.height);
     var orangeButtonTrigger = false;
     var pinkButtonTrigger = false;
     var spikeTrigger = false;
+
+    //tutorial end trigger
+    if(avatar1.x > 1400 && avatar1.y < 700){
+        tutorialEnd = true;
+    }
 
     //controls dissapear
     if(avatar1.x > 550 && avatar2.x > 550 && avatar3.x > 550 && avatar4.x > 550){
@@ -583,7 +595,7 @@ function passableDoor(player1, player2, player3, door){
 }
 
 
-function buttonPress0(player, buttons){
+function buttonAdd(player, buttons, options = {}){
 
      if(buttons.overlaps(player)) {
 
@@ -598,109 +610,129 @@ function buttonPress0(player, buttons){
             }
 
             if(player.vy == 0){
-                buttons.y = 1500;
 
-                blocks[3].y = 975;
-                blocks[4].y = 950;
-            }
-
-        }
-    }
-}
-
-
-function buttonPress1(player, buttons){
-
-     if(buttons.overlaps(player)) {
-
-        //top of button
-        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
-            player.vy = 0;
-            player.y--;
-
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
-
-            if(player.vy == 0){
-                buttons.y = 1500;
-
-                tutorialEnd = true;
-
-                //hides everything on canvas
-                blocks[0].y = 1500;
-                blocks[1].y = 1500;
-                blocks[2].y = 1500;
-                blocks[3].y = 1500;
-                blocks[4].y = 1500;
-                spikes[0].y = 1500;
-                button[0].y = 1500;
-
-                //move hidden objects up
-                spikes[1].y = 985;
-
-                blocks[5].y = 990;
-                blocks[6].y = 990;
-                blocks[7].y = 960;
-                button[2].y = 990;
-                
-            }
-
-        }
-    }
-}
-
-function buttonPress2(player, buttons){
-
-     if(buttons.overlaps(player)) {
-
-        //top of button
-        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
-            player.vy = 0;
-            player.y--;
-
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
-
-            if(player.vy == 0){
             buttons.y = 1500;
 
-                //hides everything on canvas
-                spikes[1].y = 1500;
-                blocks[5].y = 1500;
-                blocks[6].y = 1500;
-                blocks[7].y = 1500;
+             // players
+                if (options.players) {
+                    options.players.forEach(function(playerData) {
+                        playerData.player.x = playerData.x;
+                        playerData.player.y = playerData.y;
+                    });
+                }
 
-                //moves hidden objects up
-                blocks[8].y = 200;
-                blocks[9].y = 400;
-                blocks[10].y = 600;
+                // blocks
+                if (options.blocks) {
+                    options.blocks.forEach(function(blockData) {
+                        blocks[blockData.block].y = blockData.y;
+                    });
+                }
 
-                doors[2].y = 500;
-                doors[3].y = 500;
+                // spikes
+                if (options.spikes) {
+                    options.spikes.forEach(function(spikeData) {
+                        spikes[spikeData.spike].y = spikeData.y;
+                    });
+                }
 
-                button[3].y = 175;
-                button[4].y = 375;
-                button[5].y = 575;
-                button[6].y = 990;
+                // button
+                if (options.button) {
+                    options.button.forEach(function(buttonData) {
+                        button[buttonData.button].y = buttonData.y;
+                    });
+                }
 
-                //moves players
-                avatar1.x = 100;
-                avatar1.y = 950;
-                avatar2.x = 700;
-                avatar2.y = 150;
-                avatar3.x = 1000;
-                avatar3.y = 150;
-                avatar4.x = 400;
-                avatar4.y = 150;
+                // doors
+                if (options.doors) {
+                    options.doors.forEach(function(doorData) {
+                        doors[doorData.door].y = doorData.y;
+                    });
+                }
             }
 
         }
     }
 }
+
+function buttonRemove(player, buttons, options = {}){
+
+     if(buttons.overlaps(player)) {
+
+        //top of button
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
+            player.vy = 0;
+            player.y--;
+
+            //jumping 
+            if(w == true){ 
+                player.vy = jumpHeight;
+            }
+
+            if(player.vy == 0){
+
+            buttons.y = 1500;
+                //erase buttons
+                for (var i = 0; i < button.length; i++) {
+                    button[i].y = 1500;
+                }
+
+                //erase doors
+                for (var i = 0; i < doors.length; i++) {
+                    doors[i].y = 1500;
+                }
+
+                //erase blocks
+                for (var i = 0; i < blocks.length; i++) {
+                    blocks[i].y = 1500;
+                }
+                
+                //erase spikes
+                for (var i = 0; i < spikes.length; i++) {
+                    spikes[i].y = 1500;
+                }
+
+             // players
+                if (options.players) {
+                    options.players.forEach(function(playerData) {
+                        playerData.player.x = playerData.x;
+                        playerData.player.y = playerData.y;
+                    });
+                }
+
+                // blocks
+                if (options.blocks) {
+                    options.blocks.forEach(function(blockData) {
+                        blocks[blockData.block].y = blockData.y;
+                    });
+                }
+
+                // spikes
+                if (options.spikes) {
+                    options.spikes.forEach(function(spikeData) {
+                        spikes[spikeData.spike].y = spikeData.y;
+                    });
+                }
+
+                // button
+                if (options.button) {
+                    options.button.forEach(function(buttonData) {
+                        button[buttonData.button].y = buttonData.y;
+                    });
+                }
+
+                // doors
+                if (options.doors) {
+                    options.doors.forEach(function(doorData) {
+                        doors[doorData.door].y = doorData.y;
+                    });
+                }
+            }
+
+        }
+    }
+}
+
+
 
 function colorButton(player, door1, door2, door3, door4, button1, buttons){
 
@@ -725,66 +757,6 @@ function colorButton(player, door1, door2, door3, door4, button1, buttons){
                 //new doors
                 doors[door3].y = 500;
                 doors[door4].y = 500;
-            }
-        }
-    }
-}
-
-function buttonEnd(player, buttons){
-
-     if(buttons.overlaps(player)) {
-
-        //top of button
-        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
-            player.vy = 0;
-            player.y--;
-
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
-
-            if(player.vy == 0){
-
-                //erase buttons
-                for (var i = 0; i < button.length; i++) {
-                    button[i].y = 1500;
-                }
-
-                //erase doors
-                for (var i = 0; i < doors.length; i++) {
-                    doors[i].y = 1500;
-                }
-
-                //erase blocks
-                for (var i = 0; i < blocks.length; i++) {
-                    blocks[i].y = 1500;
-                }
-                
-                //erase spikes
-                for (var i = 0; i < spikes.length; i++) {
-                    spikes[i].y = 1500;
-                }
-
-            //reset objects to beginning
-            blocks[0].y = 950;
-            blocks[1].y = 950;
-            blocks[2].y = 950;
-            spikes[0].y = 985;
-            button[0].y = 990;
-            button[1].y = 710;
-
-            //reset players to beginning
-            avatar1.x = startingX
-            avatar1.y = startingY
-            avatar2.x = startingX
-            avatar2.y = startingY
-            avatar3.x = startingX
-            avatar3.y = startingY
-            avatar4.x = startingX
-            avatar4.y = startingY
-
-            tutorialEnd = false;
             }
         }
     }
