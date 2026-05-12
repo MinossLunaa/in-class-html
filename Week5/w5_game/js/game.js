@@ -5,39 +5,42 @@ var fps = 1000/60;
 var timer = setInterval(main, fps);
 
 var gravity = 0.5;
-var jumpHeight = -8;
+var jumpHeight = -18;
+
+var startingX = 100;
+var startingY = 200;
 
 var tutorialEnd = false;
 
 
 //create player 1
 var avatar1 = new GameObject();
-avatar1.x = 100;
-avatar1.y = 800;
+avatar1.x = startingX;
+avatar1.y = startingY*4;
 avatar1.color = "pink";
 avatar1.vx = 5;
 avatar1.vy = 5;
 
 //create player 2
 var avatar2 = new GameObject();
-avatar2.x = 100;
-avatar2.y = 600;
+avatar2.x = startingX;
+avatar2.y = startingY*3;
 avatar2.color = "cyan";
 avatar2.vx = 5;
 avatar2.vy = 5;
 
 //create player 3
 var avatar3 = new GameObject();
-avatar3.x = 100;
-avatar3.y = 400;
+avatar3.x = startingX;
+avatar3.y = startingY*2;
 avatar3.color = "grey";
 avatar3.vx = 5;
 avatar3.vy = 5;
 
 //create player 4
 var avatar4 = new GameObject();
-avatar4.x = 100;
-avatar4.y = 200;
+avatar4.x = startingX;
+avatar4.y = startingY;
 avatar4.color = "purple";
 avatar4.vx = 5;
 avatar4.vy = 5;
@@ -45,18 +48,27 @@ avatar4.vy = 5;
 
 //place blocks           x    y    w    h    color
 var blocks = [];
-blocks.push(createBlock(500, 950, 100, 100));
-blocks.push(createBlock(700, 950, 100, 300));
-blocks.push(createBlock(1550, 950, 100, 460));
-
-//place buttons
-var button = [];
-button.push(createButton(1110, 990, 30, 20, "blue"));
-button.push(createButton(1550, 710, 30, 20, "pink"));
+blocks.push(createBlock(500, 950, 100, 100));                //0
+blocks.push(createBlock(700, 950, 100, 300));                //1
+blocks.push(createBlock(1550, 950, 100, 460));               //2
+blocks.push(createBlock(400, 1500, 100, 55));                //3 hidden - button 0
+blocks.push(createBlock(600, 1500, 100, 200));               //4 hidden - button 0
+blocks.push(createBlock(1025, 1500, 100, 100));              //5 hidden - button 1
+blocks.push(createBlock(700, 1500, 100, 100));               //6 hidden - button 1
+blocks.push(createBlock(350, 1500, 100, 100));               //7 hidden - button 1
 
 //place spikes
 var spikes = [];
-spikes.push(createSpike(825, 985, 30, 30));
+spikes.push(createSpike(825, 985, 30, 30));                  //0
+spikes.push(createSpike(650, 1500, 700, 30));                //1 hidden - button 1
+
+//place buttons
+var button = [];
+button.push(createButton(1110, 990, 30, 20, "orange"));      //0
+button.push(createButton(1550, 710, 30, 20, "pink"));        //1
+button.push(createButton(100, 1500, 30, 20, "orange"));      //2 hidden - button 1
+
+
 
 
 function main()
@@ -78,6 +90,21 @@ ctx.clearRect(0, 0, c.width, c.height);
     //player 4 input
     if(rightarrow == true){avatar4.x += avatar4.vx;}
     if(leftarrow == true){avatar4.x -= avatar4.vx;}
+
+    //spike collisions
+    for (var i = 0; i < spikes.length; i++) {
+        spikeKill(avatar1, spikes[0], 100, 600);
+        spikeKill(avatar2, spikes[0], 100, 600);
+        spikeKill(avatar3, spikes[0], 100, 600);
+        spikeKill(avatar4, spikes[0], 100, 600);
+
+        spikeKill(avatar1, spikes[1], 1500, 600);
+        spikeKill(avatar2, spikes[1], 1500, 600);
+        spikeKill(avatar3, spikes[1], 1500, 600);
+        spikeKill(avatar4, spikes[1], 1500, 600);
+
+        spikes[i].render();
+    }
 
     //player collisions
     for (var i = 0; i < blocks.length; i++) {
@@ -106,18 +133,14 @@ ctx.clearRect(0, 0, c.width, c.height);
         buttonPress0(avatar4, button[0])
 
         buttonPress1(avatar1, button[1])
+
+        buttonPress2(avatar1, button[2])
+        buttonPress2(avatar2, button[2])
+        buttonPress2(avatar3, button[2])
+        buttonPress2(avatar4, button[2])
+
         button[i].render();
 
-    }
-
-    //spike collisions
-    for (var i = 0; i < spikes.length; i++) {
-        spikeKill(avatar1, spikes[i]);
-        spikeKill(avatar2, spikes[i]);
-        spikeKill(avatar3, spikes[i]);
-        spikeKill(avatar4, spikes[i]);
-
-        spikes[i].render();
     }
 
     //player bounds check
@@ -139,9 +162,9 @@ ctx.clearRect(0, 0, c.width, c.height);
     avatar4.y += avatar4.vy;
 
 
-    //------TEXT------
+    //---------------------------------------------------------------------------------------------------TEXT-----------------------------------------------------------------------------------------------
     var controlsTrigger = false;
-    var redButtonTrigger = false;
+    var orangeButtonTrigger = false;
     var pinkButtonTrigger = false;
     var spikeTrigger = false;
 
@@ -150,9 +173,9 @@ ctx.clearRect(0, 0, c.width, c.height);
         controlsTrigger = true;
     }
 
-    //red button text
+    //orange button text
     if (avatar1.x > 750 && avatar1.x < 1300 || avatar2.x > 750 && avatar2.x < 1300 || avatar3.x > 750 && avatar3.x < 1300 || avatar4.x > 750 && avatar4.x < 1300){
-        redButtonTrigger = true;
+        orangeButtonTrigger = true;
     }
 
     //pink button text appears
@@ -183,13 +206,13 @@ ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillText(" ", 0, 0);
     }
 
-    //red button text
+    //orange button text
     if (tutorialEnd == true){
         ctx.fillText(" ", 0, 0);
     }
-    else if(redButtonTrigger == true){
+    else if(orangeButtonTrigger == true){
     ctx.font = "16px Arial";
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "orange";
     ctx.fillText("buttons can be walked through", 1000, 940);
     ctx.fillText("they will be pressed when jumped on", 980, 970);
     }else{
@@ -216,18 +239,20 @@ ctx.clearRect(0, 0, c.width, c.height);
     else if(spikeTrigger == true){
         ctx.font = "16px Arial";
         ctx.fillStyle = "red";
-        ctx.fillText("spikes hurt", 785, 950);
+        ctx.fillText("red hurts", 795, 950);
     }else{
         ctx.fillText(" ", 0, 0);
     }
 
-    //-------------------
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     avatar1.render();
     avatar2.render();
     avatar3.render();
     avatar4.render();
 }
+
+
 
 
 function createBlock(x, y, w, h) {
@@ -442,20 +467,20 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
 }
 
 
-function spikeKill(player, spike){
+function spikeKill(player, spike, x, y){
     if(spike.overlaps(player)) {
-        player.x = 100;
-        player.y = 400;
+        player.x = x;
+        player.y = y;
     }
 }
 
 
-function buttonPress0(player, button, block1, block2){
+function buttonPress0(player, buttons, block1, block2){
 
-     if(button.overlaps(player)) {
+     if(buttons.overlaps(player)) {
 
         //top of button
-        while(button.hitTestPoint(player.bottom()) ||  button.hitTestPoint(player.leftbottom()) || button.hitTestPoint(player.rightbottom())){
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
             player.vy = 0;
             player.y--;
 
@@ -465,10 +490,10 @@ function buttonPress0(player, button, block1, block2){
             }
 
             if(player.vy == 0){
-            button.y = 1500;
+                buttons.y = 1500;
 
-            blocks.push(createBlock(400, 975, 100, 55));
-            blocks.push(createBlock(600, 950, 100, 200));
+                blocks[3].y = 975;
+                blocks[4].y = 950;
             }
 
         }
@@ -476,12 +501,12 @@ function buttonPress0(player, button, block1, block2){
 }
 
 
-function buttonPress1(player, button, block1, block2){
+function buttonPress1(player, buttons, block1, block2){
 
-     if(button.overlaps(player)) {
+     if(buttons.overlaps(player)) {
 
         //top of button
-        while(button.hitTestPoint(player.bottom()) ||  button.hitTestPoint(player.leftbottom()) || button.hitTestPoint(player.rightbottom())){
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
             player.vy = 0;
             player.y--;
 
@@ -491,17 +516,54 @@ function buttonPress1(player, button, block1, block2){
             }
 
             if(player.vy == 0){
-            button.y = 1500;
+                buttons.y = 1500;
 
                 tutorialEnd = true;
 
-                for(var i = 0; i < 5; i++){
-                    blocks[i].y = 1500;
-                }
+                //hides everything on canvas
+                blocks[0].y = 1500;
+                blocks[1].y = 1500;
+                blocks[2].y = 1500;
+                blocks[3].y = 1500;
+                blocks[4].y = 1500;
+                spikes[0].y = 1500;
+                button[0].y = 1500;
 
-                for(var i = 0; i < 1; i++){
-                    spikes[i].y = 1500;
-                }
+                //move hidden objects up
+                spikes[1].y = 985;
+                blocks[5].y = 990;
+                blocks[6].y = 990;
+                blocks[7].y = 960;
+                button[2].y = 990;
+                
+            }
+
+        }
+    }
+}
+
+function buttonPress2(player, buttons, block1, block2){
+
+     if(buttons.overlaps(player)) {
+
+        //top of button
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
+            player.vy = 0;
+            player.y--;
+
+            //jumping 
+            if(w == true){ 
+                player.vy = jumpHeight;
+            }
+
+            if(player.vy == 0){
+            buttons.y = 1500;
+
+                //hides everything on canvas
+                spikes[1].y = 1500;
+                blocks[5].y = 1500;
+                blocks[6].y = 1500;
+                blocks[7].y = 1500;
             }
 
         }
