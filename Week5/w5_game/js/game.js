@@ -771,11 +771,6 @@ function colorButton(player, door1, door2, door3, door4, button1, buttons){
             player.vy = 0;
             player.y--;
 
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
-
             if(player.vy == 0){
                 //erase doors and button
                 button[button1].y = 1500;
