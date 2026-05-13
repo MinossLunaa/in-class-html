@@ -100,7 +100,7 @@ button.push(createButton(1550, 710, 30, 20, "pink"));        //1  start  - butto
 
 button.push(createButton(100, 1500, 30, 20, "orange"));      //2  hidden - button 1
 
-button.push(createButton(100, 1500, 30, 20, "orange"));      //3  hidden - button 2
+button.push(createButton(100, 990, 30, 20, "orange"));      //3  hidden - button 2
 button.push(createButton(505, 1500, 30, 20, "pink"));        //4  hidden - button 2
 button.push(createButton(545, 1500, 30, 20, "grey"));        //5  hidden - button 2
 button.push(createButton(1550, 1500, 30, 20, "orange"));     //6  hidden - button 2
