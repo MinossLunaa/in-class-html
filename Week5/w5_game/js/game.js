@@ -16,7 +16,7 @@ var startingY = 200;
 var playerSpeed = 5;
 
 var gravity = 0.5;
-var jumpHeight = -18;
+var jumpHeight = -8;
 
 var tutorialEnd = false;
 
