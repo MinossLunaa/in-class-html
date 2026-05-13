@@ -9,9 +9,7 @@ var startingY = 200;
 var playerSpeed = 5;
 
 var gravity = 0.5;
-var jumpHeight = -18;
-
-var tutorialEnd = false;
+var jumpHeight = -8;
 
 
 //create player 1
@@ -47,46 +45,33 @@ avatar4.vy = playerSpeed;
 avatar4.color = "purple";
 
 
-//place blocks           x    y    w    h    color           num     properties
+//place blocks           x    y    w    h    color
 var blocks = [];
-blocks.push(createBlock(500, 950, 100, 100));                //0  start  - button end
-blocks.push(createBlock(700, 950, 100, 300));                //1  start  - button end
-blocks.push(createBlock(1550, 950, 100, 460));               //2  start  - button end
-blocks.push(createBlock(400, 1500, 100, 55));                //3  hidden - button 0
-blocks.push(createBlock(600, 1500, 100, 200));               //4  hidden - button 0
-blocks.push(createBlock(1025, 1500, 100, 100));              //5  hidden - button 1
-blocks.push(createBlock(700, 1500, 100, 100));               //6  hidden - button 1
-blocks.push(createBlock(350, 1500, 100, 100));               //7  hidden - button 1
-blocks.push(createBlock(940, 1500, 1500, 30));               //8  hidden - button 2
-blocks.push(createBlock(660, 1500, 1500, 30));               //9  hidden - button 2
-blocks.push(createBlock(940, 1500, 1500, 30));              //10  hidden - button 2
+blocks.push(createBlock(50, 950, 150, 100));
+blocks.push(createBlock(300, 950, 75, 100));
+blocks.push(createBlock(525, 950, 75, 100));
+blocks.push(createBlock(725, 950, 75, 100));
+blocks.push(createBlock(925, 950, 75, 100));
+blocks.push(createBlock(1125, 950, 75, 600));
+blocks.push(createBlock(1325, 950, 75, 800));
+blocks.push(createBlock(1550, 950, 150, 100));
 
 
 //place spikes
 var spikes = [];
-spikes.push(createSpike(825, 985, 30, 30));                  //0  start  - button end
-spikes.push(createSpike(650, 1500, 700, 30));                //1  hidden - button 1
+spikes.push(createSpike(800, 985, 1600, 30)); 
 
 //place buttons
 var button = [];
-button.push(createButton(1110, 990, 30, 20, "orange"));      //0  start  - button end
-button.push(createButton(1550, 710, 30, 20, "pink"));        //1  start  - button end
-button.push(createButton(100, 1500, 30, 20, "orange"));      //2  hidden - button 1
-button.push(createButton(1350, 1500, 30, 20, "cyan"));       //3  hidden - button 2
-button.push(createButton(1350, 1500, 30, 20, "grey"));       //4  hidden - button 2
-button.push(createButton(1350, 1500, 30, 20, "purple"));     //5  hidden - button 2
-button.push(createButton(1500, 1500, 30, 20, "pink"));       //6  hidden - button 2
+button.push(createButton(1550, 890, 30, 20, "orange"));     //creation button
 
 //place doors
 var doors = [];
-doors.push(createDoor(200, 1500, 10, 1000, "pink"));          //0  unused
-doors.push(createDoor(1400, 1500, 10, 1000, "pink"));         //1  unused 
-doors.push(createDoor(200, 1500, 10, 1000, "cyan"));          //2  hidden - button 2
-doors.push(createDoor(1400, 1500, 10, 1000, "cyan"));         //3  hidden - button 2
-doors.push(createDoor(200, 1500, 10, 1000, "grey"));          //4  hidden - color button
-doors.push(createDoor(1400, 1500, 10, 1000, "grey"));         //5  hidden - color button
-doors.push(createDoor(200, 1500, 10, 1000, "purple"));        //6  hidden - color button
-doors.push(createDoor(1400, 1500, 10, 1000, "purple"));       //7  hidden - color button
+doors.push(createDoor(270, 500, 10, 1000, "pink"));
+doors.push(createDoor(495, 500, 10, 1000, "cyan"));
+doors.push(createDoor(695, 500, 10, 1000, "grey"));
+doors.push(createDoor(895, 500, 10, 1000, "purple"));
+
 
 function main()
 {
@@ -112,13 +97,7 @@ ctx.clearRect(0, 0, c.width, c.height);
     //door collisions
     for (var i = 0; i < doors.length; i++) {
         passableDoor(avatar2, avatar3, avatar4, doors[0]); //pink door
-        passableDoor(avatar2, avatar3, avatar4, doors[1]); //pink door
-        passableDoor(avatar1, avatar3, avatar4, doors[2]); //cyan door
-        passableDoor(avatar1, avatar3, avatar4, doors[3]); //cyan door
-        passableDoor(avatar1, avatar2, avatar4, doors[4]); //grey door
-        passableDoor(avatar1, avatar2, avatar4, doors[5]); //grey door
-        passableDoor(avatar1, avatar2, avatar3, doors[6]); //purple door
-        passableDoor(avatar1, avatar2, avatar3, doors[7]); //purple door
+        passableDoor(avatar1, avatar3, avatar4, doors[1]); //cyan door
 
         doors[i].render();
     }
@@ -129,11 +108,6 @@ ctx.clearRect(0, 0, c.width, c.height);
         spikeKill(avatar2, spikes[0], 100, 600);
         spikeKill(avatar3, spikes[0], 100, 600);
         spikeKill(avatar4, spikes[0], 100, 600);
-
-        spikeKill(avatar1, spikes[1], 1500, 600);
-        spikeKill(avatar2, spikes[1], 1500, 600);
-        spikeKill(avatar3, spikes[1], 1500, 600);
-        spikeKill(avatar4, spikes[1], 1500, 600);
 
         spikes[i].render();
     }
@@ -164,27 +138,8 @@ ctx.clearRect(0, 0, c.width, c.height);
         //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]
 
         //button 0 start
-        buttonAdd(avatar1, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
-        buttonAdd(avatar2, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
-        buttonAdd(avatar3, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
-        buttonAdd(avatar4, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
+        buttonAdd(avatar1, button[0], {});
 
-        //button 1
-        buttonRemove(avatar1, button[1], {blocks: [{block: 5, y: 990}, {block: 6, y: 990}, {block: 7, y: 960}], spikes: [{spike: 1, y: 985}], button: [{button: 2, y: 990}]});
-
-        //button 2
-        buttonRemove(avatar1, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
-        buttonRemove(avatar2, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
-        buttonRemove(avatar3, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
-        buttonRemove(avatar4, button[2], {players: [{player: avatar1, x: 100, y: 950}, {player: avatar2, x: 700, y: 150}, {player: avatar3, x: 1000, y: 150}, {player: avatar4, x: 400, y: 150}], blocks: [{block: 8, y: 200}, {block: 9, y: 400}, {block: 10, y: 600}], button: [{button: 3, y: 175}, {button: 4, y: 375}, {button: 5, y: 575}, {button: 6, y: 990}], doors: [{door: 2, y: 500}, {door: 3, y: 500}]});
-
-        //buttons 3 4 5
-        colorButton(avatar2, 2, 3, 4, 5, 3, button[3]);
-        colorButton(avatar3, 4, 5, 6, 7, 4, button[4]);
-        colorButton(avatar4, 6, 7, 0, 1, 5, button[5]);
-
-        //button 6
-        buttonRemove(avatar1, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
 
         button[i].render();
     }
@@ -207,96 +162,6 @@ ctx.clearRect(0, 0, c.width, c.height);
     avatar2.y += avatar2.vy;    
     avatar3.y += avatar3.vy;
     avatar4.y += avatar4.vy;
-
-
-    //---------------------------------------------------------------------------------------------------TEXT-----------------------------------------------------------------------------------------------
-    var controlsTrigger = false;
-    var orangeButtonTrigger = false;
-    var pinkButtonTrigger = false;
-    var spikeTrigger = false;
-
-    //tutorial end trigger
-    if(avatar1.x > 1400 && avatar1.y < 700){
-        tutorialEnd = true;
-    }
-
-    //controls dissapear
-    if(avatar1.x > 550 && avatar2.x > 550 && avatar3.x > 550 && avatar4.x > 550){
-        controlsTrigger = true;
-    }
-
-    //orange button text
-    if (avatar1.x > 750 && avatar1.x < 1300 || avatar2.x > 750 && avatar2.x < 1300 || avatar3.x > 750 && avatar3.x < 1300 || avatar4.x > 750 && avatar4.x < 1300){
-        orangeButtonTrigger = true;
-    }
-
-    //pink button text appears
-    if (avatar1.x > 1400 || avatar2.x > 1400 || avatar3.x > 1400 || avatar4.x > 1400){
-        pinkButtonTrigger = true;
-    }
-
-    //spike text appears
-    if (avatar1.x > 500 && avatar1.x < 850 || avatar2.x > 500 && avatar2.x < 850 || avatar3.x > 500 && avatar3.x < 850 || avatar4.x > 500 && avatar4.x < 850 ){
-        spikeTrigger = true;
-    }
-
-    //controls text
-    if (tutorialEnd == true){
-        ctx.fillText(" ", 0, 0);
-    }
-    else if(controlsTrigger == false){
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "purple";
-    ctx.fillText("purple: Arrow Keys", 75, 835);
-    ctx.fillStyle = "grey";
-    ctx.fillText("grey: IJKL", 90, 885);
-    ctx.fillStyle = "cyan";
-    ctx.fillText("blue: TFGH", 90, 935);
-    ctx.fillStyle = "pink";
-    ctx.fillText("pink: WASD", 90, 985);
-    }else{
-        ctx.fillText(" ", 0, 0);
-    }
-
-    //orange button text
-    if (tutorialEnd == true){
-        ctx.fillText(" ", 0, 0);
-    }
-    else if(orangeButtonTrigger == true){
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "orange";
-    ctx.fillText("buttons can be walked through", 1000, 940);
-    ctx.fillText("they will be pressed when jumped on", 980, 970);
-    }else{
-        ctx.fillText(" ", 0, 0);
-    }
-
-    //pink button text
-    if (tutorialEnd == true){
-        ctx.fillText(" ", 0, 0);
-    }
-    else if(pinkButtonTrigger == true){
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "pink";
-    ctx.fillText("some buttons are", 1475, 640);
-    ctx.fillText("color coordinated", 1475, 670);
-    }else{
-        ctx.fillText(" ", 0, 0);
-    }
-
-    //spike text
-    if (tutorialEnd == true){
-        ctx.fillText(" ", 0, 0);
-    }
-    else if(spikeTrigger == true){
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText("red hurts", 795, 950);
-    }else{
-        ctx.fillText(" ", 0, 0);
-    }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     avatar1.render();
     avatar2.render();
@@ -600,7 +465,7 @@ function buttonAdd(player, buttons, options = {}){
      if(buttons.overlaps(player)) {
 
         //top of button
-        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom()) || buttons.hitTestPoint(player.leftbottom())){
             player.vy = 0;
             player.y--;
 
