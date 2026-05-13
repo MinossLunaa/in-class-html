@@ -10,16 +10,23 @@ class GameObject
      this.vx=5;
      this.vy=0;
      this.color = `hotpink`
+     this.image = "";
     }
 
     //Draws a rectangle 
     render()
     {
         ctx.save();
-            ctx.fillStyle = this.color
-            ctx.translate(this.x, this.y)
-            ctx.rotate(this.angle*Math.PI/180)
-            ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h)
+            ctx.fillStyle = this.color;
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle*Math.PI/180);
+            if(this.color != ""){
+                ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+            }
+            
+            if(this.image != ""){
+                ctx.drawImage(this.image, -this.w/2, -this.h/2, this.w, this.h);
+            }
         ctx.restore();
     }
 

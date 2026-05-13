@@ -47,30 +47,51 @@ avatar4.color = "purple";
 
 //place blocks           x    y    w    h    color
 var blocks = [];
-blocks.push(createBlock(50, 950, 150, 100));
-blocks.push(createBlock(300, 950, 75, 100));
-blocks.push(createBlock(525, 950, 75, 100));
-blocks.push(createBlock(725, 950, 75, 100));
-blocks.push(createBlock(925, 950, 75, 100));
-blocks.push(createBlock(1125, 950, 75, 600));
-blocks.push(createBlock(1325, 950, 75, 800));
-blocks.push(createBlock(1550, 950, 150, 100));
+blocks.push(createBlock(500, 1500, 100, 100));                //0  start  - button end
+blocks.push(createBlock(700, 1500, 100, 300));                //1  start  - button end
+blocks.push(createBlock(1550, 1500, 100, 460));               //2  start  - button end
+blocks.push(createBlock(400, 1500, 100, 55));                //3  hidden - button 0
+blocks.push(createBlock(600, 1500, 100, 200));               //4  hidden - button 0
+blocks.push(createBlock(1025, 1500, 100, 100));              //5  hidden - button 1
+blocks.push(createBlock(700, 1500, 100, 100));               //6  hidden - button 1
+blocks.push(createBlock(350, 1500, 100, 100));               //7  hidden - button 1
+//--
+blocks.push(createBlock(50, 1500, 150, 100));                 //8
+blocks.push(createBlock(300, 1500, 75, 100));                 //9
+blocks.push(createBlock(525, 1500, 75, 100));                //10
+blocks.push(createBlock(725, 1500, 75, 100));                //11
+blocks.push(createBlock(925, 1500, 75, 100));                //12
+blocks.push(createBlock(1125, 1500, 75, 600));               //13
+blocks.push(createBlock(1325, 1500, 75, 800));               //14
+blocks.push(createBlock(1550, 1500, 150, 100));              //15
 
 
 //place spikes
 var spikes = [];
-spikes.push(createSpike(800, 985, 1600, 30)); 
+spikes.push(createSpike(825, 1500, 30, 30));                  //0  start  - button end
+spikes.push(createSpike(650, 1500, 700, 30));                //1  hidden - button 1
+//--
+spikes.push(createSpike(800, 1500, 1600, 30));                //2
 
 //place buttons
 var button = [];
-button.push(createButton(1550, 890, 30, 20, "orange"));     //creation button
+button.push(createButton(1110, 1500, 30, 20, "orange"));      //0  start  - button end
+button.push(createButton(1550, 1500, 30, 20, "pink"));        //1  start  - button end
+button.push(createButton(100, 1500, 30, 20, "orange"));      //2  hidden - button 1
+//--
+button.push(createButton(500, 985, 30, 20, "orange"));     //3 creation button
+button.push(createButton(505, 1500, 30, 20, "pink"));      //4
+button.push(createButton(545, 1500, 30, 20, "grey"));      //5
+button.push(createButton(1550, 1500, 30, 20, "orange"));     //6
+
 
 //place doors
 var doors = [];
-doors.push(createDoor(270, 500, 10, 1000, "pink"));
-doors.push(createDoor(495, 500, 10, 1000, "cyan"));
-doors.push(createDoor(695, 500, 10, 1000, "grey"));
-doors.push(createDoor(895, 500, 10, 1000, "purple"));
+doors.push(createDoor(270, 1500, 10, 1000, "pink"));       //0
+doors.push(createDoor(695, 1500, 10, 1000, "grey"));       //1
+doors.push(createDoor(270, 1500, 10, 1000, "grey"));       //2
+doors.push(createDoor(695, 1500, 10, 1000, "pink"));       //3
+doors.push(createDoor(695, 1500, 0, 0, "cyan"));           //4
 
 
 function main()
@@ -96,18 +117,21 @@ ctx.clearRect(0, 0, c.width, c.height);
     
     //door collisions
     for (var i = 0; i < doors.length; i++) {
-        passableDoor(avatar2, avatar3, avatar4, doors[0]); //pink door
-        passableDoor(avatar1, avatar3, avatar4, doors[1]); //cyan door
+        passableDoor(avatar2, avatar3, avatar4, doors[0]); //pink
+        passableDoor(avatar1, avatar2, avatar4, doors[1]); //grey
+        passableDoor(avatar1, avatar2, avatar4, doors[2]); //grey
+        passableDoor(avatar2, avatar3, avatar4, doors[3]); //pink
+        passableDoor(avatar1, avatar3, avatar4, doors[4]); //cyan
 
         doors[i].render();
     }
 
     //spike collisions
     for (var i = 0; i < spikes.length; i++) {
-        spikeKill(avatar1, spikes[0], 100, 600);
-        spikeKill(avatar2, spikes[0], 100, 600);
-        spikeKill(avatar3, spikes[0], 100, 600);
-        spikeKill(avatar4, spikes[0], 100, 600);
+        spikeKill(avatar1, spikes[2], 100, 600);
+        spikeKill(avatar2, spikes[2], 100, 600);
+        spikeKill(avatar3, spikes[2], 100, 600);
+        spikeKill(avatar4, spikes[2], 100, 600);
 
         spikes[i].render();
     }
@@ -135,10 +159,17 @@ ctx.clearRect(0, 0, c.width, c.height);
     //button collisions
     for (var i = 0; i < button.length; i++) {
 
-        //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]
+        //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }], blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }], spikes: [{ spike: 2, y: 800 }], button: [{ button: 1, y: 600 }], doors: [{ door: 0, y: 200 }]});
 
-        //button 0 start
-        buttonAdd(avatar1, button[0], {});
+        buttonRemove(avatar1, button[3], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 8, y: 950}, {block: 9, y: 950}, {block: 10, y: 950}, {block: 11, y: 950}, {block: 12, y: 950}, {block: 13, y: 950}, {block: 14, y: 950}, {block: 15, y: 950}], spikes: [{spike: 2, y: 985}], button: [{button: 4, y: 890}, {button: 5, y: 890}, {button: 6, y: 890}], doors: [{door: 0, y: 500}, {door: 1, y: 500}]});
+        colorButton(avatar1, 0, 1, 2, 3, 4, button[4]);
+        colorButton(avatar3, 2, 3, 4, 5, 5, button[5]);
+
+        //button end
+        buttonRemove(avatar1, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
+        buttonRemove(avatar2, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
+        buttonRemove(avatar3, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
+        buttonRemove(avatar4, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
 
 
         button[i].render();
