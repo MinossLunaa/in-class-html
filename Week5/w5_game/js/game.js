@@ -642,11 +642,6 @@ function buttonAdd(player, buttons, options = {}){
             player.vy = 0;
             player.y--;
 
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
-
             if(player.vy == 0){
 
             buttons.y = 1500;
@@ -700,11 +695,6 @@ function buttonRemove(player, buttons, options = {}){
         while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
             player.vy = 0;
             player.y--;
-
-            //jumping 
-            if(w == true){ 
-                player.vy = jumpHeight;
-            }
 
             if(player.vy == 0){
 
