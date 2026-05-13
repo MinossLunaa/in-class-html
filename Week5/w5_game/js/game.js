@@ -121,20 +121,20 @@ function main()
     background.render();
 
     //player 1 input
-    if(d == true){avatar1.x += avatar1.vx;}
-    if(a == true){avatar1.x -= avatar1.vx;}
+    if(player1right == true){avatar1.x += avatar1.vx;}
+    if(player1left == true){avatar1.x -= avatar1.vx;}
 
     //player 2 input
-    if(h == true){avatar2.x += avatar2.vx;}
-    if(f == true){avatar2.x -= avatar2.vx;}
+    if(player2right == true){avatar2.x += avatar2.vx;}
+    if(player2left == true){avatar2.x -= avatar2.vx;}
 
     //player 3 input
-    if(l == true){avatar3.x += avatar3.vx;}
-    if(j == true){avatar3.x -= avatar3.vx;}
+    if(player3right == true){avatar3.x += avatar3.vx;}
+    if(player3left == true){avatar3.x -= avatar3.vx;}
 
     //player 4 input
-    if(rightarrow == true){avatar4.x += avatar4.vx;}
-    if(leftarrow == true){avatar4.x -= avatar4.vx;}
+    if(player4right == true){avatar4.x += avatar4.vx;}
+    if(player4left == true){avatar4.x -= avatar4.vx;}
 
     
     //door collisions
@@ -177,12 +177,12 @@ function main()
         playerCollision(avatar3, blocks[i]);
         playerCollision(avatar4, blocks[i]);
 
-        playerOnPlayer(avatar1, avatar2, w, t);
-        playerOnPlayer(avatar1, avatar3, w, ibutton);
-        playerOnPlayer(avatar1, avatar4, w, uparrow);
-        playerOnPlayer(avatar2, avatar3, t, ibutton);
-        playerOnPlayer(avatar2, avatar4, t, uparrow);
-        playerOnPlayer(avatar3, avatar4, ibutton, uparrow);
+        playerOnPlayer(avatar1, avatar2, player1up, player2up);
+        playerOnPlayer(avatar1, avatar3, player1up, player3up);
+        playerOnPlayer(avatar1, avatar4, player1up, player4up);
+        playerOnPlayer(avatar2, avatar3, player2up, player3up);
+        playerOnPlayer(avatar2, avatar4, player2up, player4up);
+        playerOnPlayer(avatar3, avatar4, player3up, player4up);
 
         blocks[i].render();
     }
@@ -401,7 +401,7 @@ function playerCollision(player, block) {
             avatar1.y--;
 
             //jumping 
-            if(w == true){ 
+            if(player1up == true){ 
                 avatar1.vy = jumpHeight;
             }
         }
@@ -412,7 +412,7 @@ function playerCollision(player, block) {
             avatar2.y--;
 
             //jumping 
-            if(t == true){ 
+            if(player2up == true){ 
                 avatar2.vy = jumpHeight;
             }
         }
@@ -423,7 +423,7 @@ function playerCollision(player, block) {
             avatar3.y--;
 
             //jumping 
-            if(ibutton == true){ 
+            if(player3up == true){ 
                 avatar3.vy = jumpHeight;
             }
         }
@@ -434,7 +434,7 @@ function playerCollision(player, block) {
             avatar4.y--;
 
             //jumping 
-            if(uparrow == true){ 
+            if(player4up == true){ 
                 avatar4.vy = jumpHeight;
             }
         }
@@ -483,7 +483,7 @@ function playerBounds(player) {
         avatar1.y = c.height - avatar1.h/2;
 
         //jumping 
-        if(w == true){ 
+        if(player1up == true){ 
             avatar1.vy = jumpHeight;
         }
     }
@@ -495,7 +495,7 @@ function playerBounds(player) {
         avatar2.y = c.height - avatar2.h/2;
 
         //jumping 
-        if(t == true){ 
+        if(player2up == true){ 
             avatar2.vy = jumpHeight;
         }
     }
@@ -507,7 +507,7 @@ function playerBounds(player) {
         avatar3.y = c.height - avatar3.h/2;
 
         //jumping 
-        if(ibutton == true){ 
+        if(player3up == true){ 
             avatar3.vy = jumpHeight;
         }
     }
@@ -519,7 +519,7 @@ function playerBounds(player) {
         avatar4.y = c.height - avatar4.h/2;
 
         //jumping 
-        if(uparrow == true){ 
+        if(player4up == true){ 
             avatar4.vy = jumpHeight;
         }
     }
@@ -527,7 +527,7 @@ function playerBounds(player) {
 
 
 function playerOnPlayer(player1, player2, player1Jump, player2Jump){
-    //player 1 with 2
+
     //top of player 1
     while(player1.hitTestPoint(player2.bottom()) || player1.hitTestPoint(player2.leftbottom()) || player1.hitTestPoint(player2.rightbottom())){
         player2.vy = 0;
@@ -537,6 +537,8 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
         if(player2Jump == true){ 
             player2.vy = jumpHeight;
         }
+
+
     }
     //top of player 2
     while(player2.hitTestPoint(player1.bottom()) || player2.hitTestPoint(player1.leftbottom()) || player2.hitTestPoint(player1.rightbottom())){
@@ -547,6 +549,7 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
         if(player1Jump == true){ 
             player1.vy = jumpHeight;
         }
+
     }
     //bottom of player 2
     while(player2.hitTestPoint(player1.top())){
