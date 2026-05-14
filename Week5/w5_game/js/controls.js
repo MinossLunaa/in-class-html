@@ -34,9 +34,9 @@ function press(e)
     if(e.keyCode == 74){player3left = true;}
     if(e.keyCode == 76){player3right = true;}
 
-    if(e.keyCode == 88){player4up = true;}
-    if(e.keyCode == 90){player4left = true;}
-    if(e.keyCode == 67){player4right = true;}
+    if(e.keyCode == 38){player4up = true;}
+    if(e.keyCode == 37){player4left = true;}
+    if(e.keyCode == 39){player4right = true;}
 }
 
 document.addEventListener(`keyup`, release);
@@ -54,7 +54,7 @@ function release(e)
     if(e.keyCode == 74){player3left = false;}
     if(e.keyCode == 76){player3right = false;}
 
-    if(e.keyCode == 88){player4up = false;}
-    if(e.keyCode == 90){player4left = false;}
-    if(e.keyCode == 67){player4right = false;}
+    if(e.keyCode == 38){player4up = false;}
+    if(e.keyCode == 37){player4left = false;}
+    if(e.keyCode == 39){player4right = false;}
 }
