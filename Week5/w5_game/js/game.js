@@ -125,19 +125,18 @@ function main()
     //START SCREEN
     if(gameStart == false){
 
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, c.width, c.height);
+        background.render();
 
         ctx.fillStyle = "white";
         ctx.font = "40px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("JELLY JUMPERS", c.width/2, c.height/2);
-        ctx.fillText("press space to start", c.width/2, 600);
+
+        ctx.fillText("JELLY JUMPERS", c.width/2-150, c.height/2);
+        ctx.fillText("press space to start", c.width/2-170, 600);
 
         return;
     }
-
-    background.render();
+    
+background.render();
 
     //player 1 input
     if(player1right == true){avatar1.x += avatar1.vx;}
