@@ -14,13 +14,13 @@ music.volume = 0.1;
 var dead_sound = document.getElementById("dead");
 var button_click = document.getElementById("button_sound")
 var jump1 = document.getElementById("jump_1");
-jump1.volume = 0.1;
+jump1.volume = 0.01;
 var jump2 = document.getElementById("jump_2");
-jump2.volume = 0.1;
+jump2.volume = 0.01;
 var jump3 = document.getElementById("jump_3");
-jump3.volume = 0.1;
+jump3.volume = 0.01;
 var jump4 = document.getElementById("jump_4");
-jump4.volume = 0.1;
+jump4.volume = 0.01;
 
 
 var fps = 1000/60;
