@@ -9,6 +9,20 @@ var purple_image = document.getElementById("purplejellyfish");
 var spike_image = document.getElementById("crab");
 var block_image = document.getElementById("wall")
 
+var music = document.getElementById("music");
+music.volume = 0.1;
+var dead_sound = document.getElementById("dead");
+var button_click = document.getElementById("button_sound")
+var jump1 = document.getElementById("jump_1");
+jump1.volume = 0.1;
+var jump2 = document.getElementById("jump_2");
+jump2.volume = 0.1;
+var jump3 = document.getElementById("jump_3");
+jump3.volume = 0.1;
+var jump4 = document.getElementById("jump_4");
+jump4.volume = 0.1;
+
+
 var fps = 1000/60;
 var timer = setInterval(main, fps);
 
@@ -135,7 +149,7 @@ function main()
 
         return;
     }
-
+music.play();
 background.render();
 
     //player 1 input
@@ -308,8 +322,7 @@ background.render();
     else if(orangeButtonTrigger == true){
     ctx.font = "16px Arial";
     ctx.fillStyle = "orange";
-    ctx.fillText("buttons can be walked through", 1000, 940);
-    ctx.fillText("they will be pressed when jumped on", 980, 970);
+    ctx.fillText("buttons will be pressed when jumped on", 980, 970);
     }else{
         ctx.fillText(" ", 0, 0);
     }
@@ -413,6 +426,8 @@ function playerCollision(player, block) {
             //jumping 
             if(player1up == true){ 
                 avatar1.vy = jumpHeight;
+                jump1.currentTime = 0;
+                jump1.play();
             }
         }
 
@@ -424,6 +439,8 @@ function playerCollision(player, block) {
             //jumping 
             if(player2up == true){ 
                 avatar2.vy = jumpHeight;
+                jump2.currentTime = 0;
+                jump2.play();
             }
         }
 
@@ -435,6 +452,8 @@ function playerCollision(player, block) {
             //jumping 
             if(player3up == true){ 
                 avatar3.vy = jumpHeight;
+                jump3.currentTime = 0;
+                jump3.play();
             }
         }
 
@@ -446,6 +465,8 @@ function playerCollision(player, block) {
             //jumping 
             if(player4up == true){ 
                 avatar4.vy = jumpHeight;
+                jump4.currentTime = 0;
+                jump4.play();
             }
         }
 
@@ -495,6 +516,8 @@ function playerBounds(player) {
         //jumping 
         if(player1up == true){ 
             avatar1.vy = jumpHeight;
+            jump1.currentTime = 0;
+            jump1.play();
         }
     }
 
@@ -507,6 +530,8 @@ function playerBounds(player) {
         //jumping 
         if(player2up == true){ 
             avatar2.vy = jumpHeight;
+            jump2.currentTime = 0;
+            jump2.play();
         }
     }
 
@@ -519,6 +544,8 @@ function playerBounds(player) {
         //jumping 
         if(player3up == true){ 
             avatar3.vy = jumpHeight;
+            jump3.currentTime = 0;
+            jump3.play();
         }
     }
 
@@ -531,6 +558,8 @@ function playerBounds(player) {
         //jumping 
         if(player4up == true){ 
             avatar4.vy = jumpHeight;
+            jump4.currentTime = 0;
+            jump4.play();
         }
     }
 }
@@ -546,6 +575,8 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
         //jumping 
         if(player2Jump == true){ 
             player2.vy = jumpHeight;
+            jump3.currentTime = 0;
+            jump3.play();
         }
 
 
@@ -558,6 +589,8 @@ function playerOnPlayer(player1, player2, player1Jump, player2Jump){
         //jumping 
         if(player1Jump == true){ 
             player1.vy = jumpHeight;
+            jump4.currentTime = 0;
+            jump4.play();
         }
 
     }
@@ -583,6 +616,7 @@ function spikeKill(player, spike, x, y){
     if(spike.overlaps(player)) {
         player.x = x;
         player.y = y;
+        dead.play();
     }
 }
 
@@ -645,16 +679,17 @@ function passableDoor(player1, player2, player3, door){
 
 function buttonAdd(player, buttons, options = {}){
 
-     if(buttons.overlaps(player)) {
+    if (buttons.overlaps(player) && player.vy > 0 && player.y < buttons.y) {
 
         //top of button
         while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
             player.vy = 0;
             player.y--;
 
-            if(player.vy == 0){
+            if(player.vy >= 0){
 
             buttons.y = 1500;
+            button_click.play();
 
              // players
                 if (options.players) {
@@ -699,7 +734,7 @@ function buttonAdd(player, buttons, options = {}){
 
 function buttonRemove(player, buttons, options = {}){
 
-     if(buttons.overlaps(player)) {
+    if (buttons.overlaps(player) && player.vy > 0 && player.y < buttons.y) {
 
         //top of button
         while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
@@ -709,6 +744,7 @@ function buttonRemove(player, buttons, options = {}){
             if(player.vy == 0){
 
             buttons.y = 1500;
+            button_click.play();
                 //erase buttons
                 for (var i = 0; i < button.length; i++) {
                     button[i].y = 1500;
@@ -774,7 +810,7 @@ function buttonRemove(player, buttons, options = {}){
 
 function colorButton(player, door1, door2, door3, door4, button1, buttons){
 
-    if(buttons.overlaps(player)) {
+    if (buttons.overlaps(player) && player.vy > 0 && player.y < buttons.y) {
 
         //top of button
         while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
@@ -782,6 +818,7 @@ function colorButton(player, door1, door2, door3, door4, button1, buttons){
             player.y--;
 
             if(player.vy == 0){
+                button_click.play();
                 //erase doors and button
                 button[button1].y = 1500;
                 doors[door1].y = 1500;
@@ -792,5 +829,6 @@ function colorButton(player, door1, door2, door3, door4, button1, buttons){
                 doors[door4].y = 500;
             }
         }
+    
     }
 }
