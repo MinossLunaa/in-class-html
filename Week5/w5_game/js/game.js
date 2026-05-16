@@ -92,7 +92,7 @@ blocks.push(createBlock(1550, 1500, 150, 100));             //15  hidden - butto
 var spikes = [];
 spikes.push(createSpike(825, 985, 30, 30));                  //0  start  - button end
 
-spikes.push(createSpike(650, 1500, 700, 30));                //1  hidden - button 1
+spikes.push(createSpike(650, 1500, 650, 30));                //1  hidden - button 1
 
 spikes.push(createSpike(800, 1500, 1600, 30));               //2  hidden - button 2
 
@@ -135,7 +135,7 @@ function main()
 
         return;
     }
-    
+
 background.render();
 
     //player 1 input
