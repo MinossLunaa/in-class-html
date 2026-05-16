@@ -242,15 +242,18 @@ function main()
 
 
     //---------------------------------------------------------------------------------------------------TEXT-----------------------------------------------------------------------------------------------
-    var controlsTrigger = false;
     var orangeButtonTrigger = false;
     var pinkButtonTrigger = false;
     var spikeTrigger = false;
 
-    //tutorial end trigger and control text trigger
+    //tutorial end trigger
     if(avatar1.x > 1400 && avatar1.y < 700){
         tutorialEnd = true;
-        controlsTrigger = true;
+    }
+
+     //spike text appears
+    if (avatar1.x > 500 && avatar1.x < 850 || avatar2.x > 500 && avatar2.x < 850 || avatar3.x > 500 && avatar3.x < 850 || avatar4.x > 500 && avatar4.x < 850 ){
+        spikeTrigger = true;
     }
 
     //orange button text
@@ -263,34 +266,21 @@ function main()
         pinkButtonTrigger = true;
     }
 
-    //spike text appears
-    if (avatar1.x > 500 && avatar1.x < 850 || avatar2.x > 500 && avatar2.x < 850 || avatar3.x > 500 && avatar3.x < 850 || avatar4.x > 500 && avatar4.x < 850 ){
-        spikeTrigger = true;
-    }
-
     //controls text
-    if (tutorialEnd == true){
-        ctx.fillText(" ", 0, 0);
-    }
-    else if(controlsTrigger == false){
     ctx.font = "16px Arial";
-    ctx.lineWidth = 7;
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "#b08efe";
-    ctx.strokeText("purple: Arrow Keys", 75, 835);
-    ctx.fillText("purple: Arrow Keys", 75, 835);
-    ctx.fillStyle = "#b3b3d7";
-    ctx.strokeText("grey: IJKL", 90, 885);
-    ctx.fillText("grey: IJKL", 90, 885);
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "#a897fd";
+    ctx.strokeText("Arrow Keys", avatar4.x-40, avatar4.y-35);
+    ctx.fillText("Arrow Keys", avatar4.x-40, avatar4.y-35);
+    ctx.fillStyle = "#9ca4be";
+    ctx.strokeText("IJKL", avatar3.x-15, avatar3.y-35);
+    ctx.fillText("IJKL", avatar3.x-15, avatar3.y-35);
     ctx.fillStyle = "#8eb8fe";
-    ctx.strokeText("blue: TFGH", 90, 935);
-    ctx.fillText("blue: TFGH", 90, 935);
+    ctx.strokeText("TFGH", avatar2.x-23, avatar2.y-35);
+    ctx.fillText("TFGH", avatar2.x-23, avatar2.y-35);
     ctx.fillStyle = "#ffa2fa";
-    ctx.strokeText("pink: WASD", 90, 985);
-    ctx.fillText("pink: WASD", 90, 985);
-    }else{
-        ctx.fillText(" ", 0, 0);
-    }
+    ctx.strokeText("WASD", avatar1.x-23, avatar1.y-35);
+    ctx.fillText("WASD", avatar1.x-23, avatar1.y-35);
 
     //orange button text
     if (tutorialEnd == true){
