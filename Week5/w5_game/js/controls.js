@@ -18,6 +18,9 @@ var player4up = false;
 var player4left = false;
 var player4right = false;
 
+//start key
+var gameStart = false;
+
 
 document.addEventListener(`keydown`, press);
 function press(e)
@@ -37,6 +40,8 @@ function press(e)
     if(e.keyCode == 38){player4up = true;}
     if(e.keyCode == 37){player4left = true;}
     if(e.keyCode == 39){player4right = true;}
+
+    if(e.code == "Space"){gameStart = true;}
 }
 
 document.addEventListener(`keyup`, release);

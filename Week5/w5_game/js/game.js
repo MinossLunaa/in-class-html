@@ -7,6 +7,7 @@ var cyan_image = document.getElementById("bluejellyfish");
 var grey_image = document.getElementById("greyjellyfish");
 var purple_image = document.getElementById("purplejellyfish");
 var spike_image = document.getElementById("crab");
+var block_image = document.getElementById("wall")
 
 var fps = 1000/60;
 var timer = setInterval(main, fps);
@@ -90,7 +91,9 @@ blocks.push(createBlock(1550, 1500, 150, 100));             //15  hidden - butto
 //place spikes
 var spikes = [];
 spikes.push(createSpike(825, 985, 30, 30));                  //0  start  - button end
+
 spikes.push(createSpike(650, 1500, 700, 30));                //1  hidden - button 1
+
 spikes.push(createSpike(800, 1500, 1600, 30));               //2  hidden - button 2
 
 //place buttons
@@ -118,6 +121,22 @@ doors.push(createDoor(695, 1500, 0, 0, "cyan"));             //4  hidden - butto
 function main()
 {
     ctx.clearRect(0, 0, c.width, c.height);
+    
+    //START SCREEN
+    if(gameStart == false){
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "white";
+        ctx.font = "40px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("JELLY JUMPERS", c.width/2, c.height/2);
+        ctx.fillText("press space to start", c.width/2, 600);
+
+        return;
+    }
+
     background.render();
 
     //player 1 input
@@ -193,7 +212,8 @@ function main()
 
         //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]);
 
-        //button 0 start
+
+        //button 0
         buttonAdd(avatar1, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
         buttonAdd(avatar2, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
         buttonAdd(avatar3, button[0], {blocks: [{block: 3, y: 975}, {block: 4, y: 950}]});
@@ -333,7 +353,8 @@ function main()
 
 function createBlock(x, y, w, h) {
     var block = new GameObject();
-    block.color = "yellow";
+    block.color = "";
+    block.image = wall;
 
     block.w = w;
     block.h = h;
