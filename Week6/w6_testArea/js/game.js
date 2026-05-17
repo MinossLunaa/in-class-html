@@ -9,37 +9,37 @@ var startingY = 200;
 var playerSpeed = 5;
 
 var gravity = 0.5;
-var jumpHeight = -8;
+var jumpHeight = -28;
 
 
 //create player 1
 var avatar1 = new GameObject();
-avatar1.x = startingX;
-avatar1.y = startingY*4;
+avatar1.x = 1200;
+avatar1.y = 50;
 avatar1.vx = playerSpeed;
 avatar1.vy = playerSpeed;
 avatar1.color = "pink";
 
 //create player 2
 var avatar2 = new GameObject();
-avatar2.x = startingX;
-avatar2.y = startingY*3;
+avatar2.x = 1500;
+avatar2.y = 900;
 avatar2.vx = playerSpeed;
 avatar2.vy = playerSpeed;
 avatar2.color = "cyan";
 
 //create player 3
 var avatar3 = new GameObject();
-avatar3.x = startingX;
-avatar3.y = startingY*2;
+avatar3.x = 100;
+avatar3.y = 100;
 avatar3.vx = playerSpeed;
 avatar3.vy = playerSpeed;
 avatar3.color = "grey";
 
 //create player 4
 var avatar4 = new GameObject();
-avatar4.x = startingX;
-avatar4.y = startingY;
+avatar4.x = 50;
+avatar4.y = 100;
 avatar4.vx = playerSpeed;
 avatar4.vy = playerSpeed;
 avatar4.color = "purple";
@@ -55,7 +55,7 @@ blocks.push(createBlock(600, 1500, 100, 200));               //4  hidden - butto
 blocks.push(createBlock(1025, 1500, 100, 100));              //5  hidden - button 1
 blocks.push(createBlock(700, 1500, 100, 100));               //6  hidden - button 1
 blocks.push(createBlock(350, 1500, 100, 100));               //7  hidden - button 1
-//--
+
 blocks.push(createBlock(50, 1500, 150, 100));                 //8
 blocks.push(createBlock(300, 1500, 75, 100));                 //9
 blocks.push(createBlock(525, 1500, 75, 100));                //10
@@ -65,24 +65,74 @@ blocks.push(createBlock(1125, 1500, 75, 600));               //13
 blocks.push(createBlock(1325, 1500, 75, 800));               //14
 blocks.push(createBlock(1550, 1500, 150, 100));              //15
 
+//--
+blocks.push(createBlock(70, 175, 200, 50));               //16
+blocks.push(createBlock(700, 175, 200, 50));              //17
+blocks.push(createBlock(800, 175, 50, 1200));              //18
+blocks.push(createBlock(1225, 100, 200, 50));             //19
+blocks.push(createBlock(1200, 100, 200, 50));             //20
+blocks.push(createBlock(1200, 100, 200, 50));              //21
+blocks.push(createBlock(1125, 750, 600, 50));              //22
+blocks.push(createBlock(1500, 965, 200, 100));              //23
+blocks.push(createBlock(700, 965, 200, 100));              //24
+blocks.push(createBlock(275, 665, 100, 50));              //25
+blocks.push(createBlock(340, 425, 700, 50));              //26
+blocks.push(createBlock(50, 375, 100, 50));              //27
+
 
 //place spikes
 var spikes = [];
 spikes.push(createSpike(825, 1500, 30, 30));                  //0  start  - button end
 spikes.push(createSpike(650, 1500, 700, 30));                //1  hidden - button 1
-//--
 spikes.push(createSpike(800, 1500, 1600, 30));                //2
+
+
+//--
+spikes.push(createSpike(340, 385, 700, 30));                //3
+spikes.push(createSpike(750, 985, 1500, 30));                //4
+spikes.push(createSpike(840, 200, 30, 30));                  //5 (start crab triangle)
+spikes.push(createSpike(870, 230, 30, 30));                  //6
+spikes.push(createSpike(900, 260, 30, 30));                  //7
+spikes.push(createSpike(930, 290, 30, 30));                  //8
+spikes.push(createSpike(960, 320, 30, 30));                  //9
+spikes.push(createSpike(990, 350, 30, 30));                  //10
+spikes.push(createSpike(1020, 380, 30, 30));                  //11
+spikes.push(createSpike(1050, 410, 30, 30));                  //12
+spikes.push(createSpike(1080, 440, 30, 30));                  //13
+spikes.push(createSpike(1110, 470, 30, 30));                  //14
+spikes.push(createSpike(1140, 500, 30, 30));                  //15
+spikes.push(createSpike(1585, 200, 30, 30));                  //16
+spikes.push(createSpike(1555, 230, 30, 30));                  //17
+spikes.push(createSpike(1525, 260, 30, 30));                  //18
+spikes.push(createSpike(1495, 290, 30, 30));                  //19
+spikes.push(createSpike(1465, 320, 30, 30));                  //20
+spikes.push(createSpike(1435, 350, 30, 30));                  //21
+spikes.push(createSpike(1405, 380, 30, 30));                  //22
+spikes.push(createSpike(1375, 410, 30, 30));                  //23
+spikes.push(createSpike(1345, 440, 30, 30));                  //24
+spikes.push(createSpike(1315, 470, 30, 30));                  //25
+spikes.push(createSpike(1285, 500, 30, 30));                  //26
+spikes.push(createSpike(1255, 530, 30, 30));                  //27
+spikes.push(createSpike(1170, 530, 30, 30));                  //28 (delete this one if falling doesnt work)
+
 
 //place buttons
 var button = [];
 button.push(createButton(1110, 1500, 30, 20, "orange"));      //0  start  - button end
 button.push(createButton(1550, 1500, 30, 20, "pink"));        //1  start  - button end
 button.push(createButton(100, 1500, 30, 20, "orange"));      //2  hidden - button 1
-//--
-button.push(createButton(500, 985, 30, 20, "orange"));     //3 creation button
+
+button.push(createButton(500, 1500, 30, 20, "orange"));     //3 creation button
 button.push(createButton(505, 1500, 30, 20, "pink"));      //4
 button.push(createButton(545, 1500, 30, 20, "grey"));      //5
 button.push(createButton(1550, 1500, 30, 20, "orange"));     //6
+
+//--
+button.push(createButton(50, 340, 30, 20, "grey"));     //7
+button.push(createButton(700, 140, 30, 20, "purple"));     //8
+button.push(createButton(1215, 715, 30, 20, "cyan"));     //8
+button.push(createButton(275, 630, 30, 20, "orange"));     //9
+
 
 
 //place doors
@@ -92,6 +142,12 @@ doors.push(createDoor(695, 1500, 10, 1000, "grey"));       //1
 doors.push(createDoor(270, 1500, 10, 1000, "grey"));       //2
 doors.push(createDoor(695, 1500, 10, 1000, "pink"));       //3
 doors.push(createDoor(695, 1500, 0, 0, "cyan"));           //4
+
+//--
+doors.push(createDoor(385, 155, 435, 10, "grey"));           //5
+doors.push(createDoor(1200, 80, 800, 10, "grey"));           //6
+doors.push(createDoor(1100, 920, 700, 10, "pink"));           //7
+doors.push(createDoor(450, 355, 700, 10, "purple"));           //8 (is summoned)
 
 
 function main()

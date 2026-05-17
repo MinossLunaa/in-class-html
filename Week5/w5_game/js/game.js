@@ -21,6 +21,7 @@ var jump3 = document.getElementById("jump_3");
 jump3.volume = 0.01;
 var jump4 = document.getElementById("jump_4");
 jump4.volume = 0.01;
+var win_sound = document.getElementById("cheering");
 
 
 var fps = 1000/60;
@@ -34,6 +35,7 @@ var gravity = 0.5;
 var jumpHeight = -8;
 
 var tutorialEnd = false;
+var gameWin = false;
 
 //create background
 var background = new GameObject();
@@ -102,6 +104,19 @@ blocks.push(createBlock(1125, 1500, 75, 600));              //13  hidden - butto
 blocks.push(createBlock(1325, 1500, 75, 800));              //14  hidden - button 2
 blocks.push(createBlock(1550, 1500, 150, 100));             //15  hidden - button 2
 
+blocks.push(createBlock(70, 1500, 200, 50));                 //16
+blocks.push(createBlock(700, 1500, 200, 50));                //17
+blocks.push(createBlock(800, 2000, 50, 1200));               //18
+blocks.push(createBlock(1225, 1500, 200, 50));               //19
+blocks.push(createBlock(1200, 1500, 200, 50));               //20
+blocks.push(createBlock(1200, 1500, 200, 50));               //21
+blocks.push(createBlock(1125, 1500, 600, 50));               //22
+blocks.push(createBlock(1500, 1500, 200, 100));              //23
+blocks.push(createBlock(700, 1500, 200, 100));               //24
+blocks.push(createBlock(275, 1500, 100, 50));                //25
+blocks.push(createBlock(340, 1500, 700, 50));                //26
+blocks.push(createBlock(50, 1500, 100, 50));                 //27
+
 //place spikes
 var spikes = [];
 spikes.push(createSpike(825, 985, 30, 30));                  //0  start  - button end
@@ -109,6 +124,33 @@ spikes.push(createSpike(825, 985, 30, 30));                  //0  start  - butto
 spikes.push(createSpike(650, 1500, 650, 30));                //1  hidden - button 1
 
 spikes.push(createSpike(800, 1500, 1600, 30));               //2  hidden - button 2
+
+spikes.push(createSpike(340, 1500, 700, 30));                 //3
+spikes.push(createSpike(750, 1500, 1500, 30));                //4
+spikes.push(createSpike(840, 1500, 30, 30));                  //5 (start crab triangle)
+spikes.push(createSpike(870, 1500, 30, 30));                  //6
+spikes.push(createSpike(900, 1500, 30, 30));                  //7
+spikes.push(createSpike(930, 1500, 30, 30));                  //8
+spikes.push(createSpike(960, 1500, 30, 30));                  //9
+spikes.push(createSpike(990, 1500, 30, 30));                  //10
+spikes.push(createSpike(1020, 1500, 30, 30));                 //11
+spikes.push(createSpike(1050, 1500, 30, 30));                 //12
+spikes.push(createSpike(1080, 1500, 30, 30));                 //13
+spikes.push(createSpike(1110, 1500, 30, 30));                 //14
+spikes.push(createSpike(1140, 1500, 30, 30));                 //15
+spikes.push(createSpike(1585, 1500, 30, 30));                 //16
+spikes.push(createSpike(1555, 1500, 30, 30));                 //17
+spikes.push(createSpike(1525, 1500, 30, 30));                 //18
+spikes.push(createSpike(1495, 1500, 30, 30));                 //19
+spikes.push(createSpike(1465, 1500, 30, 30));                 //20
+spikes.push(createSpike(1435, 1500, 30, 30));                 //21
+spikes.push(createSpike(1405, 1500, 30, 30));                 //22
+spikes.push(createSpike(1375, 1500, 30, 30));                 //23
+spikes.push(createSpike(1345, 1500, 30, 30));                 //24
+spikes.push(createSpike(1315, 1500, 30, 30));                 //25
+spikes.push(createSpike(1285, 1500, 30, 30));                 //26
+spikes.push(createSpike(1255, 1500, 30, 30));                 //27
+spikes.push(createSpike(1170, 1500, 30, 30));                 //28 (delete this one if falling doesnt work)
 
 //place buttons
 var button = [];
@@ -122,6 +164,10 @@ button.push(createButton(505, 1500, 30, 20, "pink"));        //4  hidden - butto
 button.push(createButton(545, 1500, 30, 20, "grey"));        //5  hidden - button 2
 button.push(createButton(1550, 1500, 30, 20, "orange"));     //6  hidden - button 2
 
+button.push(createButton(50, 1500, 30, 20, "purple"));          //7
+button.push(createButton(700, 1500, 30, 20, "grey"));       //8
+button.push(createButton(1215, 1500, 30, 20, "cyan"));        //9
+button.push(createButton(275, 1500, 30, 20, "orange"));       //10
 
 //place doors
 var doors = [];
@@ -130,6 +176,13 @@ doors.push(createDoor(695, 1500, 10, 1000, "grey"));         //1  hidden - butto
 doors.push(createDoor(270, 1500, 10, 1000, "grey"));         //2  hidden - button 2
 doors.push(createDoor(695, 1500, 10, 1000, "pink"));         //3  hidden - button 2
 doors.push(createDoor(695, 1500, 0, 0, "cyan"));             //4  hidden - button 2
+
+doors.push(createDoor(385, 1500, 435, 10, "grey"));          //5
+doors.push(createDoor(1200, 1500, 800, 10, "grey"));         //6
+doors.push(createDoor(1100, 1500, 650, 10, "pink"));         //7
+doors.push(createDoor(450, 1500, 700, 10, "purple"));        //8 (is summoned)
+doors.push(createDoor(350, 1500, 700, 10, "purple"));        //9 (is summoned)
+doors.push(createDoor(350, 1500, 700, 10, "grey"));        //10 (is summoned)
 
 //functions----
 function main()
@@ -177,6 +230,13 @@ background.render();
         passableDoor(avatar2, avatar3, avatar4, doors[3]); //pink
         passableDoor(avatar1, avatar3, avatar4, doors[4]); //cyan
 
+        passableDoor(avatar2, avatar1, avatar4, doors[5]);
+        passableDoor(avatar2, avatar1, avatar4, doors[6]);
+        passableDoor(avatar2, avatar3, avatar4, doors[7]);
+        passableDoor(avatar2, avatar3, avatar1, doors[8]);
+        passableDoor(avatar2, avatar3, avatar1, doors[9]);
+        passableDoor(avatar2, avatar4, avatar1, doors[9]);
+
         doors[i].render();
     }
 
@@ -196,6 +256,17 @@ background.render();
         spikeKill(avatar2, spikes[2], 100, 600);
         spikeKill(avatar3, spikes[2], 100, 600);
         spikeKill(avatar4, spikes[2], 100, 600);
+
+        spikeKill(avatar3, spikes[3], 100, 100);
+        spikeKill(avatar4, spikes[3], 50, 100);
+        spikeKill(avatar1, spikes[4], 700, 600);
+        spikeKill(avatar2, spikes[4], 700, 600);
+        spikeKill(avatar3, spikes[4], 700, 600);
+        spikeKill(avatar4, spikes[4], 700, 600);
+        //crab triangle
+        for (let i = 5; i <= 27; i++) {
+            spikeKill(avatar1, spikes[i], 1200, 50);
+        }
 
         spikes[i].render();
     }
@@ -223,7 +294,7 @@ background.render();
     //button collisions
     for (var i = 0; i < button.length; i++) {
 
-        //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]);
+        //example: buttonAdd(player, buttons, {players: [{ player: avatar2, x: 500, y: 300 }],blocks: [{ block: 3, y: 975 },{ block: 4, y: 950 }],spikes: [{ spike: 2, y: 800 }],button: [{ button: 1, y: 600 }],doors: [{ door: 0, y: 200 }]});
 
 
         //button 0
@@ -241,15 +312,24 @@ background.render();
         buttonRemove(avatar3, button[3], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 8, y: 950}, {block: 9, y: 950}, {block: 10, y: 950}, {block: 11, y: 950}, {block: 12, y: 950}, {block: 13, y: 950}, {block: 14, y: 950}, {block: 15, y: 950}], spikes: [{spike: 2, y: 985}], button: [{button: 4, y: 890}, {button: 5, y: 890}, {button: 6, y: 890}], doors: [{door: 0, y: 500}, {door: 1, y: 500}]});
         buttonRemove(avatar4, button[3], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 8, y: 950}, {block: 9, y: 950}, {block: 10, y: 950}, {block: 11, y: 950}, {block: 12, y: 950}, {block: 13, y: 950}, {block: 14, y: 950}, {block: 15, y: 950}], spikes: [{spike: 2, y: 985}], button: [{button: 4, y: 890}, {button: 5, y: 890}, {button: 6, y: 890}], doors: [{door: 0, y: 500}, {door: 1, y: 500}]});
 
-        colorButton(avatar1, 0, 1, 2, 3, 4, button[4]);
-        colorButton(avatar3, 2, 3, 4, 5, 5, button[5]);
+        colorButton(avatar1, 0, 1, 2, 500, 3, 500, 4, button[4]);
+        colorButton(avatar3, 2, 3, 4, 1500, 5, 1500, 5, button[5]);
 
-        //button end
-        buttonRemove(avatar1, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
-        buttonRemove(avatar2, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
-        buttonRemove(avatar3, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
-        buttonRemove(avatar4, button[6], {players: [{player: avatar1, x: startingX, y: startingY}, {player: avatar2, x: startingX, y: startingY}, {player: avatar3, x: startingX, y: startingY}, {player: avatar4, x: startingX, y: startingY}], blocks: [{block: 0, y: 950}, {block: 1, y: 950}, {block: 2, y: 950}], spikes: [{spike: 0, y: 985}], button: [{button: 0, y: 990}, {button: 1, y: 710}]});
+        //button 3
+        buttonRemove(avatar1, button[6], {players: [{player: avatar1, x: 1200, y: 50}, {player: avatar2, x: 1500, y: 900}, {player: avatar3, x: 100, y: 100}, {player: avatar4, x: 50, y: 100}], blocks: [{block: 16, y: 175}, {block: 17, y: 175}, {block: 18, y: 175}, {block: 19, y: 100}, {block: 20, y: 100}, {block: 21, y: 100}, {block: 22, y: 750}, {block: 23, y: 965}, {block: 24, y: 965}, {block: 25, y: 665}, {block: 26, y: 425}, {block: 27, y: 375}], spikes: [{spike: 3, y: 385}, {spike: 4, y: 985}, {spike: 5, y: 200}, {spike: 6, y: 230}, {spike: 7, y: 260}, {spike: 8, y: 290}, {spike: 9, y: 320}, {spike: 10, y: 350}, {spike: 11, y: 380}, {spike: 12, y: 410}, {spike: 13, y: 440}, {spike: 14, y: 470}, {spike: 15, y: 500}, {spike: 16, y: 200}, {spike: 17, y: 230}, {spike: 18, y: 260}, {spike: 19, y: 290}, {spike: 20, y: 320}, {spike: 21, y: 350}, {spike: 22, y: 380}, {spike: 23, y: 410}, {spike: 24, y: 440}, {spike: 25, y: 470}, {spike: 26, y: 500}, {spike: 27, y: 530}], button: [{button: 7, y: 340}, {button: 8, y: 140}, {button: 9, y: 715}], doors: [{door: 5, y: 155}, {door: 6, y: 80}, {door: 7, y: 920}]});
+        buttonRemove(avatar2, button[6], {players: [{player: avatar1, x: 1200, y: 50}, {player: avatar2, x: 1500, y: 900}, {player: avatar3, x: 100, y: 100}, {player: avatar4, x: 50, y: 100}], blocks: [{block: 16, y: 175}, {block: 17, y: 175}, {block: 18, y: 175}, {block: 19, y: 100}, {block: 20, y: 100}, {block: 21, y: 100}, {block: 22, y: 750}, {block: 23, y: 965}, {block: 24, y: 965}, {block: 25, y: 665}, {block: 26, y: 425}, {block: 27, y: 375}], spikes: [{spike: 3, y: 385}, {spike: 4, y: 985}, {spike: 5, y: 200}, {spike: 6, y: 230}, {spike: 7, y: 260}, {spike: 8, y: 290}, {spike: 9, y: 320}, {spike: 10, y: 350}, {spike: 11, y: 380}, {spike: 12, y: 410}, {spike: 13, y: 440}, {spike: 14, y: 470}, {spike: 15, y: 500}, {spike: 16, y: 200}, {spike: 17, y: 230}, {spike: 18, y: 260}, {spike: 19, y: 290}, {spike: 20, y: 320}, {spike: 21, y: 350}, {spike: 22, y: 380}, {spike: 23, y: 410}, {spike: 24, y: 440}, {spike: 25, y: 470}, {spike: 26, y: 500}, {spike: 27, y: 530}], button: [{button: 7, y: 340}, {button: 8, y: 140}, {button: 9, y: 715}], doors: [{door: 5, y: 155}, {door: 6, y: 80}, {door: 7, y: 920}]});
+        buttonRemove(avatar3, button[6], {players: [{player: avatar1, x: 1200, y: 50}, {player: avatar2, x: 1500, y: 900}, {player: avatar3, x: 100, y: 100}, {player: avatar4, x: 50, y: 100}], blocks: [{block: 16, y: 175}, {block: 17, y: 175}, {block: 18, y: 175}, {block: 19, y: 100}, {block: 20, y: 100}, {block: 21, y: 100}, {block: 22, y: 750}, {block: 23, y: 965}, {block: 24, y: 965}, {block: 25, y: 665}, {block: 26, y: 425}, {block: 27, y: 375}], spikes: [{spike: 3, y: 385}, {spike: 4, y: 985}, {spike: 5, y: 200}, {spike: 6, y: 230}, {spike: 7, y: 260}, {spike: 8, y: 290}, {spike: 9, y: 320}, {spike: 10, y: 350}, {spike: 11, y: 380}, {spike: 12, y: 410}, {spike: 13, y: 440}, {spike: 14, y: 470}, {spike: 15, y: 500}, {spike: 16, y: 200}, {spike: 17, y: 230}, {spike: 18, y: 260}, {spike: 19, y: 290}, {spike: 20, y: 320}, {spike: 21, y: 350}, {spike: 22, y: 380}, {spike: 23, y: 410}, {spike: 24, y: 440}, {spike: 25, y: 470}, {spike: 26, y: 500}, {spike: 27, y: 530}], button: [{button: 7, y: 340}, {button: 8, y: 140}, {button: 9, y: 715}], doors: [{door: 5, y: 155}, {door: 6, y: 80}, {door: 7, y: 920}]});
+        buttonRemove(avatar4, button[6], {players: [{player: avatar1, x: 1200, y: 50}, {player: avatar2, x: 1500, y: 900}, {player: avatar3, x: 100, y: 100}, {player: avatar4, x: 50, y: 100}], blocks: [{block: 16, y: 175}, {block: 17, y: 175}, {block: 18, y: 175}, {block: 19, y: 100}, {block: 20, y: 100}, {block: 21, y: 100}, {block: 22, y: 750}, {block: 23, y: 965}, {block: 24, y: 965}, {block: 25, y: 665}, {block: 26, y: 425}, {block: 27, y: 375}], spikes: [{spike: 3, y: 385}, {spike: 4, y: 985}, {spike: 5, y: 200}, {spike: 6, y: 230}, {spike: 7, y: 260}, {spike: 8, y: 290}, {spike: 9, y: 320}, {spike: 10, y: 350}, {spike: 11, y: 380}, {spike: 12, y: 410}, {spike: 13, y: 440}, {spike: 14, y: 470}, {spike: 15, y: 500}, {spike: 16, y: 200}, {spike: 17, y: 230}, {spike: 18, y: 260}, {spike: 19, y: 290}, {spike: 20, y: 320}, {spike: 21, y: 350}, {spike: 22, y: 380}, {spike: 23, y: 410}, {spike: 24, y: 440}, {spike: 25, y: 470}, {spike: 26, y: 500}, {spike: 27, y: 530}], button: [{button: 7, y: 340}, {button: 8, y: 140}, {button: 9, y: 715}], doors: [{door: 5, y: 155}, {door: 6, y: 80}, {door: 7, y: 920}]});
 
+        buttonAdd(avatar2, button[9], {button: [{button: 10, y: 630}]});
+
+        colorButton(avatar3, 5, 8, 5, 1500, 8, 355, 8, button[8]);
+        colorButton(avatar4, 6, 8, 10, 350, 9, 360, 7, button[7]);
+
+        buttonEnd(avatar1, button[10]);
+        buttonEnd(avatar2, button[10]);
+        buttonEnd(avatar3, button[10]);
+        buttonEnd(avatar4, button[10]);
 
         button[i].render();
     }
@@ -350,6 +430,14 @@ background.render();
         ctx.fillText("crabs hurt", 795, 950);
     }else{
         ctx.fillText(" ", 0, 0);
+    }
+
+    //victory text
+    if(gameWin == true){
+    ctx.fillStyle = "white";
+    ctx.font = "40px Arial";
+    ctx.fillText("CONGRATULATIONS!!!", c.width/2-200, c.height/2);
+    ctx.fillText("YOU WIN", c.width/2-80, 600);
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -616,7 +704,7 @@ function spikeKill(player, spike, x, y){
     if(spike.overlaps(player)) {
         player.x = x;
         player.y = y;
-        dead.play();
+        dead_sound.play();
     }
 }
 
@@ -747,22 +835,22 @@ function buttonRemove(player, buttons, options = {}){
             button_click.play();
                 //erase buttons
                 for (var i = 0; i < button.length; i++) {
-                    button[i].y = 1500;
+                    button[i].y = 2000;
                 }
 
                 //erase doors
                 for (var i = 0; i < doors.length; i++) {
-                    doors[i].y = 1500;
+                    doors[i].y = 2000;
                 }
 
                 //erase blocks
                 for (var i = 0; i < blocks.length; i++) {
-                    blocks[i].y = 1500;
+                    blocks[i].y = 2000;
                 }
                 
                 //erase spikes
                 for (var i = 0; i < spikes.length; i++) {
-                    spikes[i].y = 1500;
+                    spikes[i].y = 2000;
                 }
 
              // players
@@ -808,7 +896,7 @@ function buttonRemove(player, buttons, options = {}){
 
 
 
-function colorButton(player, door1, door2, door3, door4, button1, buttons){
+function colorButton(player, door1, door2, door3, door3y, door4, door4y, button1, buttons){
 
     if (buttons.overlaps(player) && player.vy > 0 && player.y < buttons.y) {
 
@@ -820,15 +908,59 @@ function colorButton(player, door1, door2, door3, door4, button1, buttons){
             if(player.vy == 0){
                 button_click.play();
                 //erase doors and button
-                button[button1].y = 1500;
-                doors[door1].y = 1500;
-                doors[door2].y = 1500;
+                button[button1].y = 2000;
+                doors[door1].y = 2000;
+                doors[door2].y = 2000;
 
                 //new doors
-                doors[door3].y = 500;
-                doors[door4].y = 500;
+                doors[door3].y = door3y;
+                doors[door4].y = door4y;
             }
         }
     
+    }
+}
+
+
+
+function buttonEnd(player, buttons){
+
+    if (buttons.overlaps(player) && player.vy > 0 && player.y < buttons.y) {
+
+        //top of button
+        while(buttons.hitTestPoint(player.bottom()) ||  buttons.hitTestPoint(player.leftbottom()) || buttons.hitTestPoint(player.rightbottom())){
+            player.vy = 0;
+            player.y--;
+
+            if(player.vy == 0){
+
+            buttons.y = 1500;
+            button_click.play();
+            win_sound.play();
+
+                //erase buttons
+                for (var i = 0; i < button.length; i++) {
+                    button[i].y = 2000;
+                }
+
+                //erase doors
+                for (var i = 0; i < doors.length; i++) {
+                    doors[i].y = 2000;
+                }
+
+                //erase blocks
+                for (var i = 0; i < blocks.length; i++) {
+                    blocks[i].y = 2000;
+                }
+                
+                //erase spikes
+                for (var i = 0; i < spikes.length; i++) {
+                    spikes[i].y = 2000;
+                }
+
+                gameWin = true;
+                
+            }
+        }
     }
 }

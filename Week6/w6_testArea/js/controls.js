@@ -40,10 +40,10 @@ function press(e)
     if(e.keyCode == 75){k = true;}
     if(e.keyCode == 76){l = true;}
 
-    if(e.keyCode == 38){uparrow = true;}
+    if(e.keyCode == 88){uparrow = true;}
     if(e.keyCode == 40){downarrow = true;}
-    if(e.keyCode == 37){leftarrow = true;}
-    if(e.keyCode == 39){rightarrow = true;}
+    if(e.keyCode == 90){leftarrow = true;}
+    if(e.keyCode == 67){rightarrow = true;}
 }
 
 document.addEventListener(`keyup`, release);
@@ -64,8 +64,8 @@ function release(e)
     if(e.keyCode == 75){k = false;}
     if(e.keyCode == 76){l = false;}
 
-    if(e.keyCode == 38){uparrow = false;}
+    if(e.keyCode == 88){uparrow = false;}
     if(e.keyCode == 40){downarrow = false;}
-    if(e.keyCode == 37){leftarrow = false;}
-    if(e.keyCode == 39){rightarrow = false;}
+    if(e.keyCode == 90){leftarrow = false;}
+    if(e.keyCode == 67){rightarrow = false;}
 }

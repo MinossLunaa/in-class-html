@@ -21,6 +21,9 @@ var player4right = false;
 //start key
 var gameStart = false;
 
+var y = false;
+var n = false;
+
 
 document.addEventListener(`keydown`, press);
 function press(e)
@@ -42,6 +45,9 @@ function press(e)
     if(e.keyCode == 39){player4right = true;}
 
     if(e.code == "Space"){gameStart = true;}
+
+    if(e.keycode == "89"){y = true;}
+    if(e.keycode == "78"){n = true;}
 }
 
 document.addEventListener(`keyup`, release);
@@ -62,4 +68,7 @@ function release(e)
     if(e.keyCode == 38){player4up = false;}
     if(e.keyCode == 37){player4left = false;}
     if(e.keyCode == 39){player4right = false;}
+
+    if(e.keycode == "89"){y = false;}
+    if(e.keycode == "78"){n = false;}
 }
